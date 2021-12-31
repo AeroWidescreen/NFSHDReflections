@@ -1,0 +1,21 @@
+// Release Folder
+SOURCE/NFSPS/Release/
+SOURCE/NFSC/Release/
+SOURCE/NFSMW/Release/
+SOURCE/NFSU2/Release/
+SOURCE/NFSU/Release/
+
+// Debug Folder
+SOURCE/Debug/
+SOURCE/NFSPS/Debug/
+SOURCE/NFSC/Debug/
+SOURCE/NFSMW/Debug/
+SOURCE/NFSU2/Debug/
+SOURCE/NFSU/Debug/
+
+// Visual Studio Folder
+SOURCE/.vs/
+
+// Files
+*.pdb
+*.asi
