@@ -19,7 +19,7 @@ https://mega.nz/file/gCxGUCpK#QlO57l7xjYyyFXGhjqlu6AcJq9nEFeZueNr2ywC04Hc
 • Scale : Controls the resolution multiplier of reflections.  
 • ImproveReflectionLOD : Increases the level of detail used in reflections.  
 • ExtendRenderDistance : Increases the render distance of vehicle reflections.  
-• RealFrontEndReflections : Enables real-time vehicle reflections in the front end. 
+• RealFrontEndReflections : Enables real-time vehicle reflections in the front end.  
 • RealisticChrome : Makes the chrome materiel more reflective.  
 • VehicleReflectionBrightness : Controls the intensity of vehicle reflections.  
 
