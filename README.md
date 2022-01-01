@@ -14,14 +14,14 @@ https://mega.nz/file/gCxGUCpK#QlO57l7xjYyyFXGhjqlu6AcJq9nEFeZueNr2ywC04Hc
 
 ## Features
 • HDReflections : Resolution will be increased based on desktop resolution.  
-• CubemapRes : Controls the resolution of vehicle cubemaps used in the front-end.
+• CubemapRes : Controls the resolution of vehicle cubemaps used in the front-end.  
 • OldGPUCompatibility: Vehicle reflections will be rounded to the nearest power of two.  
 • Scale : Controls the resolution multiplier of reflections.  
 • ImproveReflectionLOD : Increases the level of detail used in reflections.  
 • ExtendRenderDistance : Increases the render distance of vehicle reflections.  
 • RealFrontEndReflections : Enables real-time vehicle reflections in the front end. 
 • RealisticChrome : Makes the chrome materiel more reflective.  
-• VehicleReflectionBrightness : Controls the intensity of vehicle reflections. 
+• VehicleReflectionBrightness : Controls the intensity of vehicle reflections.  
 
 ## FAQ  
 Q: Is this compatible with other mods?   
