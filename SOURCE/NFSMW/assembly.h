@@ -687,7 +687,7 @@ void __declspec(naked) FECarModelFixCodeCave()
 {
 	_asm
 	{
-		mov dword ptr ds : [0x8FAE6C], 0x03 // Invert Backface CUlling Flipped For Car Model
+		mov dword ptr ds : [0x8FAE6C], 0x03 // Invert Backface Culling For Flipped Car Model
 		call sub_6E2F50
 		mov dword ptr ds : [0x8FAE6C], 0x02 // Normalize Backface Culling For Everything Else
 		jmp FECarModelFixCodeCaveExit
