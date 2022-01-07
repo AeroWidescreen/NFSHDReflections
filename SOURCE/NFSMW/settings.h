@@ -20,8 +20,8 @@ bool RestoreVisualTreatment;
 bool RestoreShaders;
 bool RestoreShadows;
 bool RestoreDetails;
+bool RestoreBackfaceCulling;
 bool OptimizeRenderDistance;
-bool GeometryFix;
 float VehicleReflectionBrightness;
 
 // Extra

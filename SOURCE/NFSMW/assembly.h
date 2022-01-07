@@ -680,3 +680,16 @@ void __declspec(naked) CarModelRoadReflectionCodeCave()
 		jmp loc_74E70F
 	}
 }
+
+DWORD FECarModelFixCodeCaveExit = 0x6DEF42;
+
+void __declspec(naked) FECarModelFixCodeCave()
+{
+	_asm
+	{
+		mov dword ptr ds : [0x8FAE6C], 0x03 // Invert Backface CUlling Flipped For Car Model
+		call sub_6E2F50
+		mov dword ptr ds : [0x8FAE6C], 0x02 // Normalize Backface Culling For Everything Else
+		jmp FECarModelFixCodeCaveExit
+	}
+}

@@ -185,7 +185,7 @@ void Init()
 		// Restores the traffic sign brightness
 		injector::MakeJMP(0x71E07F, TrafficSignFixCodeCave, true);
 		// TrafficSignDistance
-		float TrafficSignDistance = 45000.0f;
+		static float TrafficSignDistance = 45000.0f;
 		injector::WriteMemory(0x79B257, &TrafficSignDistance, true);
 	}
 

@@ -23,11 +23,11 @@ void Init()
 
 	// General
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 2);
-	GeometryFix = iniReader.ReadInteger("GENERAL", "GeometryFix", 1);
 	RestoreShaders = iniReader.ReadInteger("GENERAL", "RestoreShaders", 1);
 	RestoreShadows = iniReader.ReadInteger("GENERAL", "RestoreShadows", 1);
 	RestoreVisualTreatment = iniReader.ReadInteger("GENERAL", "RestoreVisualTreatment", 1);
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
+	RestoreBackfaceCulling = iniReader.ReadInteger("GENERAL", "RestoreBackfaceCulling", 1);
 	OptimizeRenderDistance = iniReader.ReadInteger("GENERAL", "OptimizeRenderDistance", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0f);
 
@@ -98,11 +98,6 @@ void Init()
 		injector::MakeNOP(0x74E70E, 1, true);
 	}
 
-	if (GeometryFix)
-	{
-		injector::WriteMemory<uint8_t>(0x8FAE44, 0x00, true);
-	}
-
 	if (RestoreDetails >= 1)
 	{
 		// Adds missing traffic lights to the rearview mirror
@@ -122,6 +117,12 @@ void Init()
 		if (RestoreDetails >= 2)
 		// Adds missing particle effects to the rearview mirror
 		injector::MakeJMP(0x6DE9E3, EnableParticlesCodeCave, true);
+	}
+
+	if (RestoreBackfaceCulling)
+	{
+		// Solves backface culling issue for upside down car model in the front-end
+		injector::MakeJMP(0x6DEF3D, FECarModelFixCodeCave, true);
 	}
 
 	if (RestoreShaders)
