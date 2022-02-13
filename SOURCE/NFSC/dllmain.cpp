@@ -24,7 +24,9 @@ void Init()
 
 	// General
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
-	XB360Reflections = iniReader.ReadInteger("GENERAL", "XB360Reflections", 1);
+	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
+	ReflectionContrast = iniReader.ReadInteger("GENERAL", "ReflectionContrast", 1);
+	ForceEnvironmentMap = iniReader.ReadInteger("GENERAL", "ForceEnvironmentMap", 0);
 	AlignmentFix = iniReader.ReadInteger("GENERAL", "AlignmentFix", 1);
 	AspectRatioFix = iniReader.ReadInteger("GENERAL", "AspectRatioFix", 1);
 	CubemapFix = iniReader.ReadInteger("GENERAL", "CubemapFix", 1);
@@ -74,10 +76,8 @@ void Init()
 		injector::WriteMemory<uint32_t>(0xA63B00, PIPRes * PIPScale, true);
 		injector::WriteMemory<uint32_t>(0xA63B04, PIPRes * PIPScale, true);
 		// Front-End Vehicle Cubemap
-		if (CubemapRes < 256)
-		{CubemapRes = 256;}
-		if (CubemapRes > 2048)
-		{CubemapRes = 2048;}
+		if (CubemapRes < 256){CubemapRes = 256;}
+		if (CubemapRes > 2048){CubemapRes = 2048;}
 		injector::WriteMemory<uint32_t>(0x70DE50, CubemapRes, true);
 
 
@@ -106,7 +106,21 @@ void Init()
 		injector::MakeJMP(0x79AE94, ImproveReflectionLODCodeCave3, true);
 	}
 
-	if (XB360Reflections)
+	if (RestoreDetails)
+	{
+		// Adds car model to Road Reflection
+		injector::MakeJMP(0x72E18E, RoadReflectionCarModelCodeCave, true);
+	}
+
+	if (ForceEnvironmentMap)
+	{
+		static int EnvMapTexture = (ForceEnvironmentMap - 1);
+		if (EnvMapTexture > 4){EnvMapTexture = 4;}
+		if (EnvMapTexture < 0){EnvMapTexture = 0;}
+		injector::WriteMemory(0x748AE1, &EnvMapTexture, true);
+	}
+
+	if (ReflectionContrast)
 	{
 		// Changes the vehicle reflection shader
 		injector::MakeJMP(0x729445, VehicleReflShaderCodeCave, true);

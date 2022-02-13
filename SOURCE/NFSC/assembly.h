@@ -1,6 +1,8 @@
 #pragma once
 #include "settings.h"
 
+CIniReader iniReader("NFSCHDReflections.ini");
+
 DWORD RoadReflectionCodeCave1Exit = 0x71AA2B;
 DWORD RoadReflectionRes1;
 
@@ -283,9 +285,8 @@ void __declspec(naked) VehicleReflAspectRatioCodeCave()
 {
 	_asm
 	{
-		// checks if AspectRatioFix is enabled
 		cmp byte ptr ds : [AspectRatioFix] , 0x01
-		jge AspectRatioFix_AlignmentFix
+		jge AspectRatioFix_AlignmentFix // jumps if AspectRatioFix is enabled
 		// if only AlignmentFix
 		mov eax, dword ptr ds : [AspectRatio_1]
 		jmp ExitCode
@@ -357,6 +358,10 @@ DWORD VehicleReflBrightnessCodeCaveExit = 0x748A9D;
 
 void __declspec(naked) VehicleReflBrightnessCodeCave()
 {
+	if (ReflectionContrast > 1)
+	{
+		VehicleReflBrightnessSubtraction = 0.5f;
+	}
 	_asm 
 	{
 		push edx
@@ -391,6 +396,11 @@ DWORD VehicleReflBrightnessCodeCave2Exit = 0x7497E4;
 
 void __declspec(naked) VehicleReflBrightnessCodeCave2()
 {
+
+	if (ReflectionContrast > 1)
+	{
+		VehicleReflBrightnessSubtraction = 0.5f;
+	}
 	__asm {
 		push edx
 		mov edx, dword ptr ds : [0xAB08F4]
@@ -401,7 +411,7 @@ void __declspec(naked) VehicleReflBrightnessCodeCave2()
 		lea ebx, dword ptr ds : [FEVehicleReflBrightness]
 		cmp dword ptr ds : [0xA99BBC] , 0x06 // checks gmae state
 		je InGameVehicleReflBrightnessCodeCave
-		cmp byte ptr ds : [XB360Reflections] , 0x00
+		cmp byte ptr ds : [ReflectionContrast] , 0x00
 		jle VehicleReflBrightnessCodeCave2Part2
 
 		// FEVehicleReflBrightnessCodeCave
@@ -487,7 +497,7 @@ void __declspec(naked) FEReflBrightnessCodeCave()
 		fmul dword ptr ds : [esi + 0xC4]
 		cmp dword ptr ds : [0xA99BBC] , 0x06 // checks game state
 		je FEReflBrightnessCodeCavePart2
-		cmp byte ptr ds : [XB360Reflections] , 0x00
+		cmp byte ptr ds : [ReflectionContrast] , 0x00
 		jg FEReflBrightnessCodeCavePart2
 		fmul dword ptr ds : [FEReflBrightness]
 		fmul dword ptr ds : [VehicleReflectionBrightness]
@@ -614,55 +624,86 @@ void __declspec(naked) PauseBlurCodeCave2()
 	}
 }
 
+DWORD sub_72C9B0 = 0x72C9B0;
+DWORD sub_7CCA20 = 0x7CCA20;
+DWORD RoadReflectionCarModelCodeCaveExit = 0x72E193;
+
+void __declspec(naked) RoadReflectionCarModelCodeCave()
+{
+	_asm
+	{
+		call sub_72C9B0
+		mov dword ptr ds : [0xA6523C], 0x03
+		push 0x01
+		push 0xB4B110
+		call sub_7CCA20
+		add esp, 0x08
+		call sub_72C9B0
+		mov dword ptr ds : [0xA6523C], 0x02
+		jmp RoadReflectionCarModelCodeCaveExit
+	}
+}
+
 DWORD VisualTreatmentCodeCaveExit = 0x71D706;
 
 void __declspec(naked) VisualTreatmentCodeCave()
 {
 	_asm
 	{
-		cmp byte ptr ds : [0xA65394] , 00 // checks visual treatment setting
-		jg GameStateCheck
-		mov edx, dword ptr ds : [0xB43070] // No Tint
-		jmp VisualTreatmentCodeCaveExit
-
-	GameStateCheck :
-		cmp dword ptr ds : [0xA99BBC], 0x06 // checks game state
+		cmp dword ptr ds : [0xA99BBC] , 0x06 // checks game state
 		jne VisualTreatmentFrontEnd
 
-	VisualTreatmentInGame :
-		cmp byte ptr ds : [ReplaceVisualTreatmentIG], 02
-		jge VisualTreatmentInGame_NoTint
-		cmp byte ptr ds : [ReplaceVisualTreatmentIG], 01
-		je VisualTreatmentInGame_PurpleTint
-		
-		VisualTreatmentInGame_OriginalTint :
-		mov edx, dword ptr ds : [0xB43068] // Original Tint
-		jmp VisualTreatmentCodeCaveExit
-		
-		VisualTreatmentInGame_PurpleTint :
-		mov edx, dword ptr ds : [0xB4306C] // Purple Tint
-		jmp VisualTreatmentCodeCaveExit
-		
-		VisualTreatmentInGame_NoTint :
-		mov edx, dword ptr ds : [0xB43070] // No Tint
+VisualTreatmentInGame :
+		cmp byte ptr ds : [ReplaceVisualTreatmentIG] , 00
+		jle LUT0_IG
+		cmp byte ptr ds : [ReplaceVisualTreatmentIG] , 01
+		je LUT1_IG
+		cmp byte ptr ds : [ReplaceVisualTreatmentIG] , 02
+		je LUT2_IG
+		cmp byte ptr ds : [ReplaceVisualTreatmentIG] , 03
+		jge LUT3_IG
+
+	LUT0_IG:
+		mov edx, dword ptr ds : [0xB43068] // FILTER0
 		jmp VisualTreatmentCodeCaveExit
 
-	VisualTreatmentFrontEnd:
-		cmp byte ptr ds : [ReplaceVisualTreatmentFE] , 02
-		jge VisualTreatmentInGame_NoTint
+	LUT1_IG :
+		mov edx, dword ptr ds : [0xB4306C] // FILTER1
+		jmp VisualTreatmentCodeCaveExit
+
+	LUT2_IG :
+		mov edx, dword ptr ds : [0xB43070] // FILTER2
+		jmp VisualTreatmentCodeCaveExit
+
+	LUT3_IG :
+		mov edx, dword ptr ds : [0xB43074] // FILTER3
+		jmp VisualTreatmentCodeCaveExit
+
+
+VisualTreatmentFrontEnd:
+		cmp byte ptr ds : [ReplaceVisualTreatmentFE] , 00
+		jle LUT0_FE
 		cmp byte ptr ds : [ReplaceVisualTreatmentFE] , 01
-		je VisualTreatmentInGame_PurpleTint
+		je LUT1_FE
+		cmp byte ptr ds : [ReplaceVisualTreatmentFE] , 02
+		je LUT2_FE
+		cmp byte ptr ds : [ReplaceVisualTreatmentFE] , 03
+		jge LUT3_FE
 
-		VisualTreatmentFrontEnd_OriginalTint :
-		mov edx, dword ptr ds : [0xB43068] // Original Tint
+	LUT0_FE :
+		mov edx, dword ptr ds : [0xB43068] // FILTER0
 		jmp VisualTreatmentCodeCaveExit
 
-		VisualTreatmentFrontEnd_PurpleTint :
-		mov edx, dword ptr ds : [0xB4306C] // Purple Tint
+	LUT1_FE :
+		mov edx, dword ptr ds : [0xB4306C] // FILTER1
 		jmp VisualTreatmentCodeCaveExit
 
-		VisualTreatmentFrontEnd_NoTint :
-		mov edx, dword ptr ds : [0xB43070] // No Tint
+	LUT2_FE :
+		mov edx, dword ptr ds : [0xB43070] // FILTER2
+		jmp VisualTreatmentCodeCaveExit
+
+	LUT3_FE :
+		mov edx, dword ptr ds : [0xB43074] // FILTER3
 		jmp VisualTreatmentCodeCaveExit
 	}
 }

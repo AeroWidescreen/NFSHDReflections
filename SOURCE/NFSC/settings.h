@@ -19,7 +19,9 @@ float PIPScale;
 
 // General
 bool ImproveReflectionLOD;
-bool XB360Reflections;
+bool RestoreDetails;
+int ReflectionContrast;
+int ForceEnvironmentMap;
 bool AlignmentFix;
 bool AspectRatioFix;
 bool CubemapFix;

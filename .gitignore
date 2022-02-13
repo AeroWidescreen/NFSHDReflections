@@ -19,3 +19,7 @@ SOURCE/.vs/
 // Files
 *.pdb
 *.asi
+*.json
+*.suo
+*.db
+*.ipch
