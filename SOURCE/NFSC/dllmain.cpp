@@ -110,6 +110,13 @@ void Init()
 	{
 		// Adds car model to Road Reflection
 		injector::MakeJMP(0x72E18E, RoadReflectionCarModelCodeCave, true);
+
+		if (RestoreDetails > 1)
+		{
+			// Adds particle effects to RVM
+			injector::MakeJMP(0x72E453, MirrorParticleEffectsCodeCave, true);
+			injector::MakeNOP(0x72E458, 5, true);
+		}
 	}
 
 	if (ForceEnvironmentMap)

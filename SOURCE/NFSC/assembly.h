@@ -644,6 +644,21 @@ void __declspec(naked) RoadReflectionCarModelCodeCave()
 	}
 }
 
+DWORD sub_75AA10 = 0x75AA10;
+DWORD MirrorParticleEffectsCodeCaveExit = 0x72E45D;
+
+void __declspec(naked) MirrorParticleEffectsCodeCave()
+{
+	_asm
+	{
+		push 0xB4B090
+		mov ecx, 0xB4BE70
+		call sub_75AA10
+		call sub_72C9B0
+		jmp MirrorParticleEffectsCodeCaveExit
+	}
+}
+
 DWORD VisualTreatmentCodeCaveExit = 0x71D706;
 
 void __declspec(naked) VisualTreatmentCodeCave()

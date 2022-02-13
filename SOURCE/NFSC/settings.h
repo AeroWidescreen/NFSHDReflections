@@ -19,7 +19,7 @@ float PIPScale;
 
 // General
 bool ImproveReflectionLOD;
-bool RestoreDetails;
+int RestoreDetails;
 int ReflectionContrast;
 int ForceEnvironmentMap;
 bool AlignmentFix;
