@@ -108,12 +108,16 @@ void Init()
 
 	if (RestoreDetails)
 	{
-		// Adds car model to Road Reflection
+		// Adds car model to road reflection
 		injector::MakeJMP(0x72E18E, RoadReflectionCarModelCodeCave, true);
+		// Adds color to vehicle flares in road reflection
+		// Discovered by Archie
+		injector::MakeJMP(0x72E1E0, RoadReflectionVehicleFlaresCodeCave, true);
+		injector::MakeNOP(0x72E2C8, 5, true);
 
 		if (RestoreDetails > 1)
 		{
-			// Adds particle effects to RVM
+			// Adds particle effects to mirror
 			injector::MakeJMP(0x72E453, MirrorParticleEffectsCodeCave, true);
 			injector::MakeNOP(0x72E458, 5, true);
 		}

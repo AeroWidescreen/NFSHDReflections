@@ -43,8 +43,9 @@ Q: What happened to the old mod pages?
 A: They've been deleted. I've decided to consolidate everything into a single package; this applies to the download page and source code. It's easier to manage and more convenient for everyone.  
 
  ## Credits
-[Aero_](https://github.com/AeroWidescreen) : Creator of NFS HD Content Support.  
+[Aero_](https://github.com/AeroWidescreen) : Creator of NFS HD Reflections.  
 
  ## Thanks
+[Archie] (https://nfsmods.xyz/user/213) : Providing information needed for RestoreDetails in Need for Speed Carbon.  
 [osdever](https://nfsmods.xyz/usermods/16) : Providing information needed for RestoreShaders in Need for Speed Most Wanted.  
 [SpeedyHeart](https://nfsmods.xyz/usermods/3) : Providing information needed for RestoreSkybox and AspectRatioFix in Need for Speed Carbon.  

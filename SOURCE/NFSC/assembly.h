@@ -644,6 +644,24 @@ void __declspec(naked) RoadReflectionCarModelCodeCave()
 	}
 }
 
+DWORD sub_7507D0 = 0x7507D0;
+DWORD sub_7D5DC0 = 0x7D5DC0;
+DWORD RoadReflectionVehicleFlaresCodeCaveExit = 0x72E1E5;
+
+void __declspec(naked) RoadReflectionVehicleFlaresCodeCave()
+{
+	_asm
+	{
+		call sub_7507D0
+		push 0x00
+		push 0x01
+		push 0xB4B110
+		call sub_7D5DC0
+		add esp, 0x0C
+		jmp RoadReflectionVehicleFlaresCodeCaveExit
+	}
+}
+
 DWORD sub_75AA10 = 0x75AA10;
 DWORD MirrorParticleEffectsCodeCaveExit = 0x72E45D;
 
