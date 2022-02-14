@@ -655,6 +655,7 @@ void __declspec(naked) MirrorParticleEffectsCodeCave()
 		mov ecx, 0xB4BE70
 		call sub_75AA10
 		call sub_72C9B0
+		mov dword ptr ds : [0xAB0B98], 0x00
 		jmp MirrorParticleEffectsCodeCaveExit
 	}
 }
