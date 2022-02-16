@@ -113,7 +113,9 @@ void Init()
 		// Adds color to vehicle flares in road reflection
 		// Discovered by Archie
 		injector::MakeJMP(0x72E1E0, RoadReflectionVehicleFlaresCodeCave, true);
-		injector::MakeNOP(0x72E2C8, 5, true);
+		// Fixes headlight glitch
+		injector::MakeJMP(0x7CBDBC, HeadlightExclusionCodeCave, true);
+		injector::MakeNOP(0x7CBDC1, 1, true);
 
 		if (RestoreDetails > 1)
 		{

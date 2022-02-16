@@ -654,11 +654,29 @@ void __declspec(naked) RoadReflectionVehicleFlaresCodeCave()
 	{
 		call sub_7507D0
 		push 0x00
-		push 0x01
+		push 0x02 // for headlight exclusion
 		push 0xB4B110
 		call sub_7D5DC0
 		add esp, 0x0C
+		call sub_72C9B0
 		jmp RoadReflectionVehicleFlaresCodeCaveExit
+	}
+}
+
+DWORD loc_7CBDD8 = 0x7CBDD8;
+DWORD HeadlightExclusionCodeCaveExit = 0x7CBDC2;
+
+void __declspec(naked) HeadlightExclusionCodeCave()
+{
+	_asm
+	{
+		cmp byte ptr ds : [ebp + 0xCC] , 0x02
+		je Not_Push02
+		mov eax, dword ptr ds : [edi + 0x30C0]
+		jmp HeadlightExclusionCodeCaveExit
+
+	Not_Push02 :
+		jmp loc_7CBDD8
 	}
 }
 
