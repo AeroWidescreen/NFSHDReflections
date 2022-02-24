@@ -116,6 +116,7 @@ void Init()
 		// Fixes headlight glitch
 		injector::MakeJMP(0x7CBDBC, HeadlightExclusionCodeCave, true);
 		injector::MakeNOP(0x7CBDC1, 1, true);
+		injector::MakeJMP(0x7CC641, FlareExclusionCodeCave, true);
 
 		if (RestoreDetails > 1)
 		{

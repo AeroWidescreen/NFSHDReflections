@@ -646,7 +646,7 @@ void __declspec(naked) RoadReflectionCarModelCodeCave()
 
 DWORD sub_7507D0 = 0x7507D0;
 DWORD sub_7D5DC0 = 0x7D5DC0;
-DWORD RoadReflectionVehicleFlaresCodeCaveExit = 0x72E1E5;
+DWORD loc_72E1E5 = 0x72E1E5;
 
 void __declspec(naked) RoadReflectionVehicleFlaresCodeCave()
 {
@@ -659,26 +659,50 @@ void __declspec(naked) RoadReflectionVehicleFlaresCodeCave()
 		call sub_7D5DC0
 		add esp, 0x0C
 		call sub_72C9B0
-		jmp RoadReflectionVehicleFlaresCodeCaveExit
+		jmp loc_72E1E5
 	}
 }
 
 DWORD loc_7CBDD8 = 0x7CBDD8;
-DWORD HeadlightExclusionCodeCaveExit = 0x7CBDC2;
+DWORD loc_7CBDC2 = 0x7CBDC2;
 
 void __declspec(naked) HeadlightExclusionCodeCave()
 {
 	_asm
 	{
+		cmp dword ptr ds : [ebp + 0xC8] , 0xB4B110
+		jne RenderHeadlights // jumps if not Road Reflection
 		cmp byte ptr ds : [ebp + 0xCC] , 0x02
-		je Not_Push02
-		mov eax, dword ptr ds : [edi + 0x30C0]
-		jmp HeadlightExclusionCodeCaveExit
-
-	Not_Push02 :
+		jne RenderHeadlights // jumps if not Push 02
 		jmp loc_7CBDD8
+
+	RenderHeadlights :
+		mov eax, dword ptr ds : [edi + 0x30C0]
+		jmp loc_7CBDC2
 	}
 }
+
+DWORD sub_74D330 = 0x74D330;
+DWORD loc_7CC646 = 0x7CC646;
+
+void __declspec(naked) FlareExclusionCodeCave()
+{
+	_asm
+	{
+		cmp dword ptr ds : [ebp + 0xC8], 0xB4B110
+		jne RenderFlares // jumps if not Road Reflection
+		cmp byte ptr ds : [ebp + 0xCC], 0x02
+		je RenderFlares // jumps if push 02
+		jmp ExitCode
+
+	RenderFlares :
+		call sub_74D330
+
+	ExitCode :
+		jmp loc_7CC646
+	}
+}
+
 
 DWORD sub_75AA10 = 0x75AA10;
 DWORD MirrorParticleEffectsCodeCaveExit = 0x72E45D;
@@ -687,10 +711,14 @@ void __declspec(naked) MirrorParticleEffectsCodeCave()
 {
 	_asm
 	{
+		cmp byte ptr ds : [0xA6536C],0x00
+		jng ExitCode
 		push 0xB4B090
 		mov ecx, 0xB4BE70
 		call sub_75AA10
 		call sub_72C9B0
+
+	ExitCode:
 		mov dword ptr ds : [0xAB0B98], 0x00
 		jmp MirrorParticleEffectsCodeCaveExit
 	}
