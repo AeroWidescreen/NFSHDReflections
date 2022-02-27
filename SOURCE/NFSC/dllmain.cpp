@@ -39,6 +39,7 @@ void Init()
 	// Extra
 	ReplaceVisualTreatmentFE = iniReader.ReadInteger("EXTRA", "ReplaceVisualTreatmentFE", 0);
 	ReplaceVisualTreatmentIG = iniReader.ReadInteger("EXTRA", "ReplaceVisualTreatmentIG", 0);
+	ExpandMemoryPool = iniReader.ReadInteger("EXTRA", "ExpandMemoryPool", 1);
 	TrafficSignFix = iniReader.ReadInteger("EXTRA", "TrafficSignFix", 1);
 	PauseBlur = iniReader.ReadInteger("EXTRA", "PauseBlur", 0);
 	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
@@ -206,6 +207,20 @@ void Init()
 		// Allows geometry to render
 		injector::MakeJMP(0x79FB5A, ImproveReflectionLODCodeCave1, true);
 		injector::MakeJMP(0x79AEDB, ImproveReflectionLODCodeCave2, true);
+	}
+
+	if (ExpandMemoryPool) // thanks Berkay and nlgzrgn
+	{
+		injector::WriteMemory<int>(0x61D553, 0x2C8000, true); // GManager::GetVaultAllocator (0x2C8000)
+		injector::WriteMemory<int>(0x61D573, 0x2C8000, true);
+
+		injector::WriteMemory<int>(0x6B7659, 0x8000, true); // InitializeEverything (0x8000)
+
+		injector::WriteMemory<DWORD>(0xA60DA0, 0x0BE6E0, true); // FEngMemoryPoolSize (InitFEngMemoryPool)
+		injector::WriteMemory<DWORD>(0xA62C48, 0x01CC00, true); // CarLoaderPoolSizes
+
+		// ePolySlotPool
+		injector::WriteMemory<DWORD>(0x55B503, 0x7D000, true); // eInitEngine
 	}
 
 	if (TrafficSignFix)

@@ -33,6 +33,7 @@ float VehicleReflectionBrightness;
 // Extra
 int ReplaceVisualTreatmentIG;
 int ReplaceVisualTreatmentFE;
+bool ExpandMemoryPool;
 bool TrafficSignFix;
 bool PauseBlur;
 bool RealisticChrome;
