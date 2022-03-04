@@ -36,4 +36,5 @@ int ReplaceVisualTreatmentFE;
 bool ExpandMemoryPool;
 bool TrafficSignFix;
 bool PauseBlur;
+bool DisableFlareRotation;
 bool RealisticChrome;

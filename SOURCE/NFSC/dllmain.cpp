@@ -42,6 +42,7 @@ void Init()
 	ExpandMemoryPool = iniReader.ReadInteger("EXTRA", "ExpandMemoryPool", 1);
 	TrafficSignFix = iniReader.ReadInteger("EXTRA", "TrafficSignFix", 1);
 	PauseBlur = iniReader.ReadInteger("EXTRA", "PauseBlur", 0);
+	DisableFlareRotation = iniReader.ReadInteger("EXTRA", "DisableFlareRotation", 0);
 	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
 
 	if (HDReflections)
@@ -154,9 +155,10 @@ void Init()
 		// Restores the original aspect ratio
 		injector::MakeJMP(0x73E1B5, VehicleReflAspectRatioCodeCave, true);
 	}
+
 	if (AspectRatioFix)
 	{
-		// Restores the original aspect ratio
+		// Restores the original aspect ratio for vehicle reflections
 		injector::MakeJMP(0x73E1B5, VehicleReflAspectRatioCodeCave, true);
 	}
 
@@ -244,6 +246,15 @@ void Init()
 	{
 		// Changes Chrome Materiel values
 		injector::MakeJMP(0x71E089, RealisticChromeCodeCave, true);
+	}
+
+	if (DisableFlareRotation)
+	{
+		// Controls rotation amount
+		injector::WriteMemory<float>(0xA6C094, 0.0f, true); // 240.0f original value
+		// Corrects the rotation of flares for vehicle reflections
+		injector::MakeCALL(0x74DE9A, VehicleReflFlareRotationCodeCave, true);
+		injector::MakeNOP(0x74DE9F, 3, true);
 	}
 	
 	if (ReflectionBlurStrength >= 0)
