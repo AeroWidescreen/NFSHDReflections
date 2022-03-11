@@ -21,6 +21,7 @@ float PIPScale;
 bool ImproveReflectionLOD;
 int RestoreDetails;
 int ReflectionContrast;
+int TrueFlareSize;
 int ForceEnvironmentMap;
 bool AlignmentFix;
 bool AspectRatioFix;

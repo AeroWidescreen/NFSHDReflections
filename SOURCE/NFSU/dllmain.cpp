@@ -71,6 +71,8 @@ void Init()
 			VehicleRes_POT |= VehicleRes_POT >> 8;
 			VehicleRes_POT |= VehicleRes_POT >> 16;
 			VehicleRes_POT++;
+			if (VehicleRes_POT > GetSystemMetrics(SM_CYSCREEN))
+			{VehicleRes_POT = VehicleRes_POT / 2;}
 			injector::WriteMemory<uint32_t>(0x702A84, VehicleRes_POT, true);
 		}
 	}

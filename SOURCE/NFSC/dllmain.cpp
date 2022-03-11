@@ -10,6 +10,7 @@
 
 void Init()
 {
+
 	// Read values from .ini
 	CIniReader iniReader("NFSCHDReflections.ini");
 
@@ -26,6 +27,7 @@ void Init()
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
 	ReflectionContrast = iniReader.ReadInteger("GENERAL", "ReflectionContrast", 1);
+	TrueFlareSize = iniReader.ReadInteger("GENERAL", "TrueFlareSize", 0);
 	ForceEnvironmentMap = iniReader.ReadInteger("GENERAL", "ForceEnvironmentMap", 0);
 	AlignmentFix = iniReader.ReadInteger("GENERAL", "AlignmentFix", 1);
 	AspectRatioFix = iniReader.ReadInteger("GENERAL", "AspectRatioFix", 1);
@@ -51,8 +53,8 @@ void Init()
 		RoadResY = GetSystemMetrics(SM_CYSCREEN);
 		VehicleRes = GetSystemMetrics(SM_CYSCREEN);
 		MirrorResX = GetSystemMetrics(SM_CYSCREEN);
-		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 3;
-		PIPRes = GetSystemMetrics(SM_CYSCREEN) / 3;
+		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 2;
+		PIPRes = GetSystemMetrics(SM_CYSCREEN) / 2;
 	}
 
 	// Writes Resolution Values
@@ -82,7 +84,6 @@ void Init()
 		if (CubemapRes > 2048){CubemapRes = 2048;}
 		injector::WriteMemory<uint32_t>(0x70DE50, CubemapRes, true);
 
-
 		if (OldGPUCompatibility)
 		{
 			// Rounds vehicle resolution down to the nearest power of two
@@ -94,6 +95,8 @@ void Init()
 			VehicleRes_POT |= VehicleRes_POT >> 8;
 			VehicleRes_POT |= VehicleRes_POT >> 16;
 			VehicleRes_POT++;
+			if (VehicleRes_POT > GetSystemMetrics(SM_CYSCREEN))
+			{VehicleRes_POT = VehicleRes_POT / 2;}
 			injector::WriteMemory<uint32_t>(0x70DE39, VehicleRes_POT, true);
 		}
 	}
@@ -144,8 +147,15 @@ void Init()
 		injector::MakeJMP(0x748A97, VehicleReflBrightnessCodeCave, true);
 		injector::MakeJMP(0x7497DE, VehicleReflBrightnessCodeCave2, true);
 		injector::MakeJMP(0x7498AA, VehicleReflSkyboxBrightnessCodeCave, true);
-		// Adjusts the size of flares in the vehicle reflection
-		injector::MakeJMP(0x74D9D5, VehicleReflFlareSizeCodeCave, true);
+	}
+
+	if (TrueFlareSize)
+	{
+		injector::MakeNOP(0x750A45, 2, true); // Vehicle Reflection
+		if (TrueFlareSize >= 2)
+		{
+			injector::MakeNOP(0x750A3B, 2, true); // Rearview Mirror
+		}
 	}
 
 	if (AlignmentFix)
@@ -251,6 +261,7 @@ void Init()
 	if (DisableFlareRotation)
 	{
 		// Controls rotation amount
+		// Thanks to 'rx' from the NFSMods Discord server.
 		injector::WriteMemory<float>(0xA6C094, 0.0f, true); // 240.0f original value
 		// Corrects the rotation of flares for vehicle reflections
 		injector::MakeCALL(0x74DE9A, VehicleReflFlareRotationCodeCave, true);

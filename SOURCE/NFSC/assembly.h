@@ -560,24 +560,6 @@ void __declspec(naked) VehicleReflRenderDistanceCodeCave()
 	}
 }
 
-DWORD VehicleReflFlareSizeCodeCaveExit = 0x74D9DC;
-
-void __declspec(naked) VehicleReflFlareSizeCodeCave()
-{
-	__asm 
-	{
-		cmp eax, 0x16
-		jl ExitCode
-		cmp eax, 0x19
-		jg ExitCode
-		mov dword ptr ds : [esp + 0x18], 0x42B40000
-
-	ExitCode:
-		lea edx, dword ptr ds : [esp + 0x80]
-		jmp VehicleReflFlareSizeCodeCaveExit
-	}
-}
-
 void __declspec(naked) VehicleReflFlareRotationCodeCave()
 {
 	__asm 
@@ -588,7 +570,7 @@ void __declspec(naked) VehicleReflFlareRotationCodeCave()
 		mov eax, dword ptr ds : [eax + 0x08]
 		cmp eax, 0x16
 		jl ExitCode
-		cmp eax, 0x19
+		cmp eax, 0x1B
 		jg ExitCode
 		mov dword ptr ds : [esp + 0x1C], 0xBF800000
 

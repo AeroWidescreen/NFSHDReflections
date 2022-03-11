@@ -47,5 +47,7 @@ A: They've been deleted. I've decided to consolidate everything into a single pa
 
  ## Thanks
 [Archie](https://nfsmods.xyz/user/213) : Providing information needed for RestoreDetails in Need for Speed Carbon.  
+[nlgzrgn & Berkay](https://nfsmods.xyz/user/31) : Providing information needed for ExpandMemoryPools in Need for Speed Carbon.  
 [osdever](https://nfsmods.xyz/usermods/16) : Providing information needed for RestoreShaders in Need for Speed Most Wanted.  
+[rx](https://www.youtube.com/c/rxyyy) : Providing information needed for DisableFlareRotation in Need for Speed Carbon.
 [SpeedyHeart](https://nfsmods.xyz/usermods/3) : Providing information needed for RestoreSkybox and AspectRatioFix in Need for Speed Carbon.  
