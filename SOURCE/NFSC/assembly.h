@@ -728,6 +728,30 @@ void __declspec(naked) MirrorParticleEffectsCodeCave()
 	}
 }
 
+void __declspec(naked) VehicleReflBrakeFlareSizeCodeCave()
+{
+	_asm
+	{
+		cmp eax, 0x01
+		je BrakeFlareSize_Main
+		cmp eax, 0x16
+		jl ExitCode
+		cmp eax, 0x1B
+		jg ExitCode
+
+	BrakeFlareSize_Reflection :
+		mov dword ptr ds : [esp + 0x1C] , 0x43340000 // 180.0f
+		ret
+
+	BrakeFlareSize_Main :
+		mov dword ptr ds : [esp + 0x1C] , 0x43B40000 // 360.0f
+		ret
+
+	ExitCode:
+		ret
+	}
+}
+
 DWORD VisualTreatmentCodeCaveExit = 0x71D706;
 
 void __declspec(naked) VisualTreatmentCodeCave()

@@ -147,6 +147,9 @@ void Init()
 		injector::MakeJMP(0x748A97, VehicleReflBrightnessCodeCave, true);
 		injector::MakeJMP(0x7497DE, VehicleReflBrightnessCodeCave2, true);
 		injector::MakeJMP(0x7498AA, VehicleReflSkyboxBrightnessCodeCave, true);
+		// Increases Brake Flare Size
+		injector::MakeCALL(0x74D9C9, VehicleReflBrakeFlareSizeCodeCave, true);
+		injector::MakeNOP(0x74D9CE, 7, true);
 	}
 
 	if (TrueFlareSize)
