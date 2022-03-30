@@ -156,7 +156,7 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD reason, LPVOID /*lpReserved*/)
 
 		else
 		{
-			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.1 NFS.exe from BATTERY (27,4 MB (28.739.656 bytes)).", "NFSPS HD Reflections by Aero_", MB_ICONERROR);
+			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.1 NFS.exe from BATTERY (27.4 MB (28,739,656 bytes)).", "NFSPS HD Reflections by Aero_", MB_ICONERROR);
 			return FALSE;
 		}
 	}

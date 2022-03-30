@@ -167,7 +167,7 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD reason, LPVOID /*lpReserved*/)
 
 		else
 		{
-			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.4 English speed.exe (3,03 MB (3.178.496 bytes)).", "NFSU HD Reflections by Aero_", MB_ICONERROR);
+			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.4 SPEED.exe from Drunk! (3.03 MB (3,178,496 bytes)).", "NFSU HD Reflections by Aero_", MB_ICONERROR);
 			return FALSE;
 		}
 	}

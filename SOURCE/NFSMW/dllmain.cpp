@@ -219,7 +219,7 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD reason, LPVOID /*lpReserved*/)
 
 		else
 		{
-			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.3 English speed.exe (5,75 MB (6.029.312 bytes)).", "NFSMW HD Reflections by Aero_", MB_ICONERROR);
+			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.3 SPEED.exe from RELOADED (5.75 MB (6,029,312 bytes)).", "NFSMW HD Reflections by Aero_", MB_ICONERROR);
 			return FALSE;
 		}
 	}

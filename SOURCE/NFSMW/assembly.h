@@ -671,9 +671,15 @@ void __declspec(naked) CarModelRoadReflectionCodeCave()
 		jmp ExitCode
 
 	IsRoadReflection:
+		cmp dword ptr ds : [0x925E90], 0x06 // checks game state
+		jne IsRoadReflection_ExitCode // jumps if not in-game
 		fld dword ptr ds : [edi + 0x38]
 		fadd dword ptr ds : [CarModelOffset]
 		fstp dword ptr ds : [edi + 0x38]
+
+	IsRoadReflection_ExitCode:
+		mov eax, dword ptr ds : [ebp + 0x28]
+		test eax, eax
 		jmp loc_74E7A3
 
 	ExitCode:

@@ -199,7 +199,7 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD reason, LPVOID /*lpReserved*/)
 
 		else
 		{
-			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.2 NTSC speed2.exe (4,57 MB (4.800.512 bytes)).", "NFSU2 HD Reflections by Aero_", MB_ICONERROR);
+			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.2 SPEED2.exe from HOODLUM (4.57 MB (4,800,512 bytes)).", "NFSU2 HD Reflections by Aero_", MB_ICONERROR);
 			return FALSE;
 		}
 	}
