@@ -148,15 +148,13 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD reason, LPVOID /*lpReserved*/)
 	if (reason == DLL_PROCESS_ATTACH)
 	{
 		uintptr_t base = (uintptr_t)GetModuleHandleA(NULL);
-		IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)(base);
-		IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(base + dos->e_lfanew);
 
-		if ((base + nt->OptionalHeader.AddressOfEntryPoint + (0x400000 - base)) == 0x00828C25) // Check if .exe file is compatible - Thanks to thelink2012 and MWisBest
+		if (strstr((const char*)(base + (0xA49742 - base)), "ProStreet08Release.exe"))
 			Init();
 
 		else
 		{
-			MessageBoxA(NULL, "This .exe is not supported.\nPlease use v1.1 NFS.exe from BATTERY (27.4 MB (28,739,656 bytes)).", "NFSPS HD Reflections by Aero_", MB_ICONERROR);
+			MessageBoxA(NULL, "This .exe is not supported.\nPlease use a NOCD v1.1 NFS.exe.", "NFSPS HD Reflections by Aero_", MB_ICONERROR);
 			return FALSE;
 		}
 	}
