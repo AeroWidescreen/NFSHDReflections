@@ -157,6 +157,20 @@ void __declspec(naked) FlipRoadSkyboxCodeCave()
 	}
 }
 
+DWORD sub_615490 = 0x615490;
+DWORD RestoreHeadlightsCodeCaveExit = 0x5CACAA;
+
+void __declspec(naked) RestoreHeadlightsCodeCave()
+{
+	_asm
+	{
+		push 0x832FA0
+		call sub_615490
+		add esp,0x04
+		jmp RestoreHeadlightsCodeCaveExit
+	}
+}
+
 DWORD ExtendVehicleRenderDistanceCodeCaveExit = 0x5C4FB5;
 
 void __declspec(naked) ExtendVehicleRenderDistanceCodeCave()

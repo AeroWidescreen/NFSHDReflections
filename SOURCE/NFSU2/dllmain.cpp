@@ -27,6 +27,7 @@ void Init()
 	FrontEndReflectionBlur = iniReader.ReadInteger("GENERAL", "FrontEndReflectionBlur", 1);
 	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
 	RestoreSkybox = iniReader.ReadInteger("GENERAL", "RestoreSkybox", 1);
+	RestoreHeadlights = iniReader.ReadInteger("GENERAL", "RestoreHeadlights", 1);
 	ExtendRenderDistance = iniReader.ReadInteger("GENERAL", "ExtendRenderDistance", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0);
 
@@ -134,6 +135,14 @@ void Init()
 		injector::MakeJMP(0x60F9D6, SkyboxRenderDistanceCodeCave, true);
 	}
 
+	if (RestoreHeadlights)
+	{
+		// Renders headlights for road reflections
+		injector::MakeJMP(0x5CACA5, RestoreHeadlightsCodeCave, true);
+		// Removes the original function call
+		injector::MakeNOP(0x5CAC07, 5, true);
+	}
+
 	if (ExtendRenderDistance)
 	{
 		// Extends vehicle reflection distance so skybox is visible
@@ -142,6 +151,7 @@ void Init()
 		injector::WriteMemory<uint32_t>(0x7870D8, 0x461C4000, true);
 	}
 
+	/*
 	if (NewMotionBlur)
 	{
 		// Force Enable Depth of Field
@@ -164,6 +174,7 @@ void Init()
 		// Speed For Motion Blur Max
 		injector::WriteMemory<float>(0x7FF7B4, 250.0f, true); // 125.0f = original
 	}
+	*/
 
 	if (RealisticChrome)
 	{

@@ -21,6 +21,7 @@ bool AspectRatioFix;
 bool FrontEndReflectionBlur;
 bool ForceEnableMirror;
 bool RestoreSkybox;
+bool RestoreHeadlights;
 bool ExtendRenderDistance;
 float VehicleReflectionBrightness;
 
