@@ -32,7 +32,7 @@ void Init()
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0f);
 
 	// Extra
-	ExpandMemoryPool = iniReader.ReadInteger("EXTRA", "ExpandMemoryPool", 1);
+	ExpandMemoryPools = iniReader.ReadInteger("EXTRA", "ExpandMemoryPools", 1);
 
 	if (HDReflections)
 	{
@@ -162,32 +162,6 @@ void Init()
 		injector::MakeJMP(0x6DB5BE, SkyboxRenderDistanceCodeCave, true);
 	}
 
-	/*
-	if (NewMotionBlur)
-	{
-		// Force Enable Depth of Field
-		// Required for New Motion Blur
-		injector::MakeNOP(0x6C3284, 6, true); // nop
-		injector::MakeNOP(0x6C2FBA, 6, true); // nop
-		injector::MakeNOP(0x6C1B14, 6, true); // nop
-		injector::MakeNOP(0x6C1A7B, 6, true); // nop
-		injector::MakeNOP(0x6C19F8, 6, true); // nop
-		injector::WriteMemory<uint8_t>(0x9017F0, 0x01, true); // Depth of Field Bool
-		// Enable New Motion Blur
-		injector::WriteMemory<uint8_t>(0x6E73FD, 0xEB, true); // jmp 0x6E741E
-		// Motion Blur Distance
-		static float MotionBlurDistance = 0.0100f;
-		injector::WriteMemory<float>(0x6E746B, MotionBlurDistance, true);
-		// Depth of Field Distance
-		static float DepthOfFieldDistance = 0.0009765625f / MotionBlurDistance;
-		injector::WriteMemory(0x6E74B0, &DepthOfFieldDistance, true);
-		// Speed For Motion Blur Min
-		injector::WriteMemory<float>(0x8F9B10, 1.0f, true); // 25.0f = original
-		// Speed For Motion Blur Max
-		injector::WriteMemory<float>(0x8F9B14, 250.0f, true); // 125.0f = original
-	}
-	*/
-
 	if (VehicleReflectionBrightness)
 	{
 		static float VehicleReflectionIntensity1 = (0.5f * VehicleReflectionBrightness);
@@ -196,8 +170,20 @@ void Init()
 		injector::WriteMemory(0x6C77D6, &VehicleReflectionIntensity2, true);
 	}
 
-	if (ExpandMemoryPool)
+	if (ExpandMemoryPools)
 	{
+		// GManager::PreloadTransientVaults (0x2C8000)
+		injector::WriteMemory<short>(0x5F7396, 0x2C80, true);
+		injector::WriteMemory<short>(0x5F73B2, 0x2C80, true);
+
+		// InitializeEverything (0x8000)
+		injector::WriteMemory<BYTE>(0x665FDC, 0x80, true);
+
+		// FEngMemoryPoolSize (InitFEngMemoryPool)
+		injector::WriteMemory<DWORD>(0x8F5790, 0x0BE6E0, true);
+		// CarLoaderPoolSizes
+		injector::WriteMemory<DWORD>(0x8F7EF0, 0x01CC00, true);
+
 		// Fixes disappearing objects
 		injector::WriteMemory<uint32_t>(0x5009D2, 0xFA000, true);
 		injector::WriteMemory<uint32_t>(0x5009DC, 0xFA000, true);

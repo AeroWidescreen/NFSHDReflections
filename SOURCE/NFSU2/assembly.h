@@ -237,3 +237,274 @@ void __declspec(naked) ParticleEffectNullCodeCave()
 		ret 4
 	}
 }
+
+DWORD loc_5BA1E5 = 0x5BA1E5;
+int RVM_POINTER[100];
+
+void __declspec(naked) MirrorEnhancedContrastCodeCavePart1()
+{
+	_asm
+	{
+		mov eax, dword ptr ds : [0x8708A4]
+		mov ecx, dword ptr ds : [eax]
+		lea edx, dword ptr ds : [RVM_POINTER]
+		push edx
+		push 0x01
+		push eax
+		call dword ptr ds : [ecx + 0x48]
+
+	ExitCode:
+		mov ecx, dword ptr ds : [0x7FEE7C]
+		jmp loc_5BA1E5
+	}
+}
+
+DWORD loc_5BA76B = 0x5BA76B;
+
+void __declspec(naked) MirrorEnhancedContrastCodeCavePart2()
+{
+	_asm
+	{
+		cmp dword ptr ds : [0x8654A4], 0x06
+		jne ExitCode
+		mov eax, dword ptr ds : [RVM_POINTER]
+		cmp eax, edi
+		je ExitCode
+		mov ecx, dword ptr ds : [eax]
+		push eax
+		call dword ptr ds : [ecx + 0x08]
+		mov dword ptr ds : [RVM_POINTER] , edi
+
+	ExitCode :
+		mov eax, dword ptr ds : [0x8708A4]
+		jmp loc_5BA76B
+	}
+}
+
+void __declspec(naked) sub_5CC8B0()
+{
+	_asm
+	{
+		mov eax, dword ptr ds : [0x870D00] // Enhanced Contrast Bool
+		test eax, eax
+		jne loc_5CC914
+		jmp loc_5CC982
+
+	loc_5CC914 :
+		mov ecx, dword ptr ds : [0x8708A8] // 008708A8
+		mov eax, dword ptr ds : [0x870974]
+		mov edx, dword ptr ds : [eax]
+		push 0x00
+		push 0x00
+		push ecx
+		mov ecx, dword ptr ds : [0x8708AC] // 008708AC
+		push 0x00
+		push ecx
+		push eax
+		call dword ptr ds: [edx + 0x88]
+		jmp loc_5CC985
+
+	loc_5CC982 :
+		add esp, 0x14
+
+	loc_5CC985 :
+		mov eax, dword ptr ds : [0x870974]
+		mov edx, dword ptr ds : [eax]
+		push 0x07
+		push 0xA8
+		push eax
+		call dword ptr ds : [edx + 0xE4]
+		ret
+	}
+}
+
+DWORD loc_5C6600 = 0x5C6600;
+
+void __declspec(naked) sub_5C6520()
+{
+	_asm
+	{
+		push ebp
+		mov ebp, esp
+		and esp, -10
+		sub esp, 0xC4
+		mov ecx, dword ptr ds : [ebp + 0x08]
+		push ebx
+		push esi
+		push edi
+		xor edi, edi
+		cmp ecx, edi
+		je loc_5C6557
+		mov eax, dword ptr ds : [0x870974]
+		mov edx, dword ptr ds : [eax]
+		push ecx
+		push edi
+		push eax
+		call dword ptr ds : [edx + 0x94]
+		mov eax, dword ptr ds : [0x870974]
+		mov ecx, dword ptr ds : [eax]
+		push edi
+		push eax
+		call dword ptr ds : [ecx + 0x9C]
+
+	loc_5C6557:
+		fild dword ptr ds : [MirrorResX]
+		fdiv dword ptr ds : [MirrorScale]
+		mov ebx, dword ptr ds : [ebp + 0x10]
+		mov esi, dword ptr ds : [ebx * 4 + 0x86EB28]
+		mov eax, 0xFF7F7F7F
+		fdivr dword ptr ds : [0x7A27CC]
+		mov dword ptr ds : [esp + 0x30], 0xBF800000
+		mov dword ptr ds : [esp + 0x34], 0x3F800000
+		mov dword ptr ds : [esp + 0x38], 0x00000000
+		mov dword ptr ds : [esp + 0x3C], eax
+		mov dword ptr ds : [esp + 0x48], 0x3F800000
+		mov dword ptr ds : [esp + 0x4C], 0x3F800000
+		mov dword ptr ds : [esp + 0x50], 0x00000000
+		mov dword ptr ds : [esp + 0x54], eax
+		mov dword ptr ds : [esp + 0x60], 0x3F800000
+		mov dword ptr ds : [esp + 0x64], 0xBF800000
+		mov dword ptr ds : [esp + 0x68], 0x00000000
+		mov dword ptr ds : [esp + 0x6C], eax
+		mov dword ptr ds : [esp + 0x78], 0xBF800000
+		mov dword ptr ds : [esp + 0x7C], 0xBF800000
+		mov dword ptr ds : [esp + 0x80], 0x00000000
+		mov dword ptr ds : [esp + 0x84], eax
+		mov dword ptr ds : [0x870910], esi
+		mov ecx, esi
+		fstp dword ptr ds : [esp + 0x14]
+		fild dword ptr ds : [MirrorResY]
+		fdiv dword ptr ds : [MirrorScale]
+		fdivr dword ptr ds : [0x7A27CC]
+		jmp loc_5C6600
+	}
+}
+
+DWORD sub_5BBE80 = 0x5BBE80;
+
+void __declspec(naked) sub_5C68D0()
+{
+	_asm
+	{
+		mov eax, dword ptr ds : [esp + 0x04]
+		mov dword ptr ds : [0x86EC98], eax
+		test byte ptr ds : [0x876860], 0x01
+		jne loc_5C6987
+		mov eax, dword ptr ds : [0x876860]
+		mov ecx, dword ptr ds : [0x7FF7AC]
+		or eax, 0x01
+		mov dword ptr ds : [0x876860], eax
+		mov dword ptr ds : [0x87685C], ecx
+		fcomp dword ptr ds : [0x86EB14]
+
+	loc_5C6987 :
+	    fcomp dword ptr ds : [0x86EB14]
+	    fnstsw ax
+	    test ah, 0x44
+	    jp loc_5C69FC
+		fld dword ptr ds : [0x7FF158]
+		fcomp dword ptr ds : [0x86EB20]
+		fnstsw ax
+		test ah, 0x44
+		jp loc_5C69FC
+		fld dword ptr ds : [0x87685C]
+		fcomp dword ptr ds : [0x7FF7AC]
+		fnstsw ax
+		test ah, 0x44
+		jp loc_5C69FC
+		fld dword ptr ds : [0x8708F0]
+		fcomp dword ptr ds : [0x7FF18C]
+		fnstsw ax
+		test ah, 0x44
+		jp loc_5C69FC
+		mov eax, dword ptr ds : [0x876858]
+		test eax, eax
+		jne loc_5C6A17
+
+	loc_5C69FC :
+		mov edx, dword ptr ds : [0x7FF7AC]
+		mov dword ptr ds : [0x87685C], edx
+		call sub_5BBE80
+		mov dword ptr ds : [0x876858], 0x01
+
+	loc_5C6A17 :
+		mov eax, dword ptr ds : [0x870974]
+		mov ecx, dword ptr ds : [eax]
+		push esi
+		push 0x0F
+		push 0xA8
+		push eax
+		call dword ptr ds : [ecx + 0xE4]
+		mov al, byte ptr ds : [esp + 0x0C]
+		test al, al
+		mov eax, 0x00
+		lea esi, dword ptr ds : [eax + 0x01]
+		and esi, 0x80000001
+		jns loc_5C6A4E
+		dec esi
+		or esi, -02
+		inc esi
+
+	loc_5C6A4E :
+		mov edx, dword ptr ds : [0x86EB6C]
+		mov ecx, dword ptr ds : [edx + 0x0C]
+		test ecx, ecx
+		push 0x00
+		push 0x01
+		push 0x02
+		push 0x00
+		push 0x11
+		mov eax, dword ptr ds : [eax * 4 + 0x8708A4] // 008708A4
+		mov ecx, dword ptr ds : [esi * 4 + 0x8708A4] // +4 = 008708A8
+		push eax
+		push ecx
+		call sub_5C6520
+		mov edx, dword ptr ds : [esi * 4 + 0x8708A0] // +4 = 008708A4
+		mov eax, 0x00
+		mov ecx, dword ptr ds : [eax * 4 + RVM_POINTER] // 008708A8
+		push 0x01
+		push 0x01
+		push 0x02
+		push 0x00
+		push 0x11
+		push edx
+		push ecx
+		call sub_5C6520
+		mov edx, 0x00
+		mov eax, dword ptr ds : [edx * 4 + 0x8708A4] // 008708A4
+		mov ecx, dword ptr ds : [0x8708AC] // 008708AC
+		push 0x02
+		push 0x01
+		push 0x02
+		push 0x00
+		push 0x11
+		push eax
+		push ecx
+		call sub_5C6520
+		add esp, 0x54
+		pop esi
+		ret
+	}
+}
+
+DWORD loc_5CAEF3 = 0x5CAEF3;
+
+void __declspec(naked) RestoreEnhancedContrastCodeCave()
+{
+	_asm
+	{
+		cmp byte ptr ds : [0x870D00] , 0x00 // Enhanced Contrast Bool
+		je ExitCode
+		call sub_5CC8B0
+		mov byte ptr ds : [esp + 0x1C] , 0x01 // Enables Enhanced Contrast
+		mov eax, dword ptr ds : [esp + 0x1C]
+		push eax
+		push ecx
+		call sub_5C68D0
+		add esp, 0x08
+
+	ExitCode :
+		mov ecx, dword ptr ds : [0x86EB5C]
+		jmp loc_5CAEF3
+	}
+}

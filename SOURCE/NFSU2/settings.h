@@ -20,11 +20,12 @@ bool RemoveParticleEffects;
 bool AspectRatioFix;
 bool FrontEndReflectionBlur;
 bool ForceEnableMirror;
+bool RestoreEnhancedContrast;
 bool RestoreSkybox;
 bool RestoreHeadlights;
 bool ExtendRenderDistance;
 float VehicleReflectionBrightness;
 
 // Extra
-bool NewMotionBlur;
+bool ExpandMemoryPools;
 bool RealisticChrome;

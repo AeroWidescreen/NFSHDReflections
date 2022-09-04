@@ -25,4 +25,4 @@ bool OptimizeRenderDistance;
 float VehicleReflectionBrightness;
 
 // Extra
-bool ExpandMemoryPool;
+bool ExpandMemoryPools;

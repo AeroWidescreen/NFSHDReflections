@@ -26,13 +26,14 @@ void Init()
 	RemoveParticleEffects = iniReader.ReadInteger("GENERAL", "RemoveParticleEffects", 1);
 	FrontEndReflectionBlur = iniReader.ReadInteger("GENERAL", "FrontEndReflectionBlur", 1);
 	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
+	RestoreEnhancedContrast = iniReader.ReadInteger("GENERAL", "RestoreEnhancedContrast", 1);
 	RestoreSkybox = iniReader.ReadInteger("GENERAL", "RestoreSkybox", 1);
 	RestoreHeadlights = iniReader.ReadInteger("GENERAL", "RestoreHeadlights", 1);
 	ExtendRenderDistance = iniReader.ReadInteger("GENERAL", "ExtendRenderDistance", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0);
 
 	// Extra
-	NewMotionBlur = iniReader.ReadInteger("EXTRA", "NewMotionBlur", 0);
+	ExpandMemoryPools = iniReader.ReadInteger("EXTRA", "ExpandMemoryPools", 1);
 	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
 
 	if (HDReflections)
@@ -120,6 +121,17 @@ void Init()
 		injector::MakeNOP(0x5CAC3A, 2, true);
 	}
 
+	if (RestoreEnhancedContrast)
+	{
+		// Creates a new "EVIEW" for the rearview mirror
+		injector::MakeJMP(0x5BA1DF, MirrorEnhancedContrastCodeCavePart1, true);
+		injector::MakeNOP(0x5BA1E4, 1, true);
+		injector::MakeJMP(0x5BA766, MirrorEnhancedContrastCodeCavePart2, true);
+		// Calls necessary functions
+		injector::MakeJMP(0x5CAEED, RestoreEnhancedContrastCodeCave, true);
+		injector::MakeNOP(0x5CAEF2, 1, true);
+	}
+
 	if (RestoreSkybox)
 	{
 		// Restores skybox for RVM
@@ -176,13 +188,40 @@ void Init()
 	}
 	*/
 
+	// Thanks to Berkay and nlgzrgn
+	if (ExpandMemoryPools)
+	{
+		// FEngMemoryPoolSize (InitFEngMemoryPool)
+		injector::WriteMemory<int>(0x8F5790, 800000, true);
+
+		// CarLoaderPoolSizesD
+		injector::WriteMemory<int>(0x7FA9C8, 22000, true);
+		injector::WriteMemory<int>(0x7FA9CC, 18000, true);
+		injector::WriteMemory<int>(0x7FA9D0, 32000, true);
+
+		// CarLoaderPoolSizesR
+		injector::WriteMemory<int>(0x7FA9D4, 22000, true);
+		injector::WriteMemory<int>(0x7FA9D8, 18000, true);
+		injector::WriteMemory<int>(0x7FA9DC, 32000, true);
+
+		// TrackStreamingPoolSizes
+		injector::WriteMemory<int>(0x79DC54, 120000, true);
+		injector::WriteMemory<int>(0x79DC58, 86000, true);
+		injector::WriteMemory<int>(0x79DC5C, 72000, true);
+
+		// Fixes disappearing objects (ePolySlotPool)
+		injector::WriteMemory<uint32_t>(0x48CD62, 0xFA000, true);
+		injector::WriteMemory<uint32_t>(0x48CD6C, 0xFA000, true);
+		injector::WriteMemory<uint32_t>(0x48CD91, 0xFA000, true);
+		injector::WriteMemory<uint32_t>(0x48CDA2, 0xFA000, true);
+	}
+
 	if (RealisticChrome)
 	{
 		// Changes the chrome material
 		injector::MakeJMP(0x5BD4B1, RealisticChromeCodeCave, true);
 		injector::MakeNOP(0x5BD4B6, 1, true);
 	}
-
 
 	if (VehicleReflectionBrightness)
 	{
