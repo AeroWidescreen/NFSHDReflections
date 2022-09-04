@@ -89,10 +89,10 @@ void Init()
 		injector::WriteMemory<uint32_t>(0x5B9D30, 0x00000100, true);
 		injector::WriteMemory<uint8_t>(0x5D67A6, 0x01, true);
 		// Vehicle Reflection LOD
-		injector::WriteMemory<uint32_t>(0x5B9C96, 0x00000000, true);
-		// Rearview Mirror LOD
 		injector::WriteMemory<uint32_t>(0x5B9CE1, 0x00000000, true);
-		injector::WriteMemory<uint8_t>(0x4888F3, 0xEB, true);
+		// Rearview Mirror LOD
+		injector::WriteMemory<uint32_t>(0x5B9C96, 0x00000000, true);
+		injector::WriteMemory<uint8_t>(0x4888F7, 0x00, true);
 	}
 
 	if (AspectRatioFix)
@@ -136,15 +136,20 @@ void Init()
 	{
 		// Restores skybox for RVM
 		injector::MakeJMP(0x5CAE61, RestoreMirrorSkyboxCodeCave, true);
+		injector::MakeNOP(0x5CAE66, 2, true);
 		// Restores skybox for vehicle reflection
 		injector::MakeJMP(0x5CAD7E, RestoreVehicleSkyboxCodeCave, true);
+		injector::MakeNOP(0x5CAD83, 1, true);
 		// Restores skybox for road reflection
 		injector::MakeJMP(0x5CAB59, RestoreRoadSkyboxCodeCave, true);
+		injector::MakeNOP(0x5CAB5E, 2, true);
 		// Flips skybox so it's visible in road reflection
 		injector::MakeJMP(0x60F955, FlipRoadSkyboxCodeCave, true);
+		injector::MakeNOP(0x60F95A, 3, true);
 		// Enables skybox
 		injector::WriteMemory<uint8_t>(0x60F9F6, 0xEB, true);
-		injector::MakeJMP(0x60F9D6, SkyboxRenderDistanceCodeCave, true);
+		// Resizes skybox to match render distance
+		injector::MakeJMP(0x60F9D6, SkyboxSizeCodeCave, true);
 	}
 
 	if (RestoreHeadlights)
@@ -159,34 +164,7 @@ void Init()
 	{
 		// Extends vehicle reflection distance so skybox is visible
 		injector::MakeJMP(0x5C4FAE, ExtendVehicleRenderDistanceCodeCave, true);
-		// Extends render RVM distance so skybox is visible
-		injector::WriteMemory<uint32_t>(0x7870D8, 0x461C4000, true);
 	}
-
-	/*
-	if (NewMotionBlur)
-	{
-		// Force Enable Depth of Field
-		// Required for New Motion Blur
-		injector::WriteMemory<uint8_t>(0x49C23D, 0xB9, true); // mov ecx, 00000000 (part 1)
-		injector::WriteMemory<uint32_t>(0x49C23E, 0x00000000, true); // mov ecx, 00000000 (part 2)
-		injector::MakeNOP(0x49C242, 1, true); // nop
-		injector::MakeNOP(0x5BE8B4, 5, true); // nop
-		injector::WriteMemory<uint8_t>(0x870CF0, 0x01, true); // Depth of Field Bool
-		// Enable New Motion Blur
-		injector::WriteMemory<uint8_t>(0x5D29CF, 0xEB, true); // jmp 0x5D29DD
-		// Motion Blur Distance
-		static float MotionBlurDistance = 0.0100f;
-		injector::WriteMemory<float>(0x5D2A2B, MotionBlurDistance, true);
-		// Depth of Field Distance
-		static float DepthOfFieldDistance = 0.0009765625f / MotionBlurDistance;
-		injector::WriteMemory(0x5D2A70, &DepthOfFieldDistance, true);
-		// Speed For Motion Blur Min
-		injector::WriteMemory<float>(0x7FF7B0, 1.0f, true); // 25.0f = original
-		// Speed For Motion Blur Max
-		injector::WriteMemory<float>(0x7FF7B4, 250.0f, true); // 125.0f = original
-	}
-	*/
 
 	// Thanks to Berkay and nlgzrgn
 	if (ExpandMemoryPools)

@@ -182,33 +182,34 @@ void __declspec(naked) ExtendVehicleRenderDistanceCodeCave()
 	}
 }
 
-float VehichleSkyboxRenderDist = 0.00625;
-float RVMSkyboxRenderDist = 0.0185;
-DWORD SkyboxRenderDistanceCodeCaveExit = 0x60F9DE;
+float Road_SkyboxSize = 0.00625;
+float Mirror_SkyboxSize = 0.0185;
+DWORD SkyboxSizeCodeCaveExit = 0x60F9DE;
 
-void __declspec(naked) SkyboxRenderDistanceCodeCave()
+void __declspec(naked) SkyboxSizeCodeCave()
 {
 	_asm
 	{
-		cmp byte ptr ds : [ExtendRenderDistance] , 0x00
-		jg SkyboxRenderDistanceCodeCavePart3 // jumps if extend render distance is enabled
-		cmp edx, 0x03
-		je SkyboxRenderDistanceCodeCavePart2 // jumps if rearview mirror
 		cmp edx, 0x01
-		je SkyboxRenderDistanceCodeCavePart3 // jumps if main render
+		je Main // jumps if main render
+		cmp edx, 0x03
+		je Mirror // jumps if rearview mirror
 		cmp edx, 0x04
-		je SkyboxRenderDistanceCodeCavePart3 // jumps if road reflection
+		je Road // jumps if road reflection
 
-		fld dword ptr ds : [VehichleSkyboxRenderDist] // render distance: 0.00625
-		jmp SkyboxRenderDistanceCodeCaveExit
+	Main :
+		fld dword ptr ds : [0x7A6768] // default skybox size: 1.0f
+		jmp SkyboxSizeCodeCaveExit
 
-	SkyboxRenderDistanceCodeCavePart2 :
-		fld dword ptr ds : [RVMSkyboxRenderDist] // render distance: 0.01825
-		jmp SkyboxRenderDistanceCodeCaveExit
+	Mirror :
+		fld dword ptr ds : [Mirror_SkyboxSize] // default skybox size: 0.01825f
+		jmp SkyboxSizeCodeCaveExit
 
-	SkyboxRenderDistanceCodeCavePart3 :
-		fld dword ptr ds : [0x7A6768] // default render distance: 1.0
-		jmp SkyboxRenderDistanceCodeCaveExit
+	Road:
+		cmp byte ptr ds : [ExtendRenderDistance] , 0x00
+		jg Main // jumps if extend render distance is enabled
+		fld dword ptr ds : [Road_SkyboxSize] // default skybox size: 0.00625f
+		jmp SkyboxSizeCodeCaveExit
 	}
 }
 
