@@ -24,29 +24,29 @@ https://mega.nz/file/gCxGUCpK#QlO57l7xjYyyFXGhjqlu6AcJq9nEFeZueNr2ywC04Hc
 • VehicleReflectionBrightness : Controls the intensity of vehicle reflections.  
 
 ## FAQ  
-Q: Is this compatible with other mods?  
+Q: **Is this compatible with other mods?**  
 A: I can't make any promises. It's been tested with Widescreen Fix, Extra Options, Unlimiter, and HUD Resizer. All texture mods and car mods should work.  
 
-Q: What are the system requirements?  
+Q: **What are the system requirements?**  
 A: It depends on your resolution, settings, and other graphical enhancements being used. For 1080p, an NVIDIA GTX 1060 / AMD RX 480 should be more than enough for default settings.  
 
-Q: Why is a No-CD fix required?  
+Q: **Why is a No-CD fix required?**  
 A: Need for Speed games have protections (DRM) that make it difficult to view and modify their code, so No-CD patches are often recommended when using ASI scripts. In addition, the memory addresses in my scripts are all harcoded, so it's not something I can easily change. If you're concerned about viruses, ask the community on the NFSMods Discord to help you acquire these patches from a trusted source.  
 
-Q: Why is the latest version of the Widescreen Fix recommended?  
+Q: **Why is the latest version of the Widescreen Fix recommended?**  
 A: Most of the features I make are often designed to work with the Widescreen Fix, as I'm heavily involved in the development of both mods. Carbon's "ReflectionContrast" and "LightingFix" features are a good example of this. The Widescreen Fix is also provides a foundation that everyone should use, since it corrects visual and technical errors the PC ports have.  
 
-Q: Why don't I have water reflections like your screenshot of Need for Speed Most Wanted?  
+Q: **Why don't I have water reflections like your screenshot of Need for Speed Most Wanted?**  
 A: Install Xbox 360 Stuff Pack by osdever & elaymm4. My screenshot simply demonstrates the improvement in resolution.  
 
-Q: What happened to the old mod pages?  
+Q: **What happened to the old mod pages?**  
 A: They've been deleted. I've decided to consolidate everything into a single package; this applies to the download page and source code. It's easier to manage and more convenient for everyone.  
 
  ## Credits
 [Aero_](https://github.com/AeroWidescreen) : Creator of NFS HD Reflections.  
 
  ## Thanks
-[Archie](https://nfsmods.xyz/user/213) : Providing information needed for RestoreDetails in Need for Speed Carbon, and RestoreHeadlights in Need for Speed Underground 2.
+[Archie](https://nfsmods.xyz/user/213) : Providing information needed for RestoreDetails in Need for Speed Carbon, and RestoreHeadlights in Need for Speed Underground 2.  
 [nlgzrgn & Berkay](https://nfsmods.xyz/user/31) : Providing information needed for ExpandMemoryPools in Need for Speed Carbon.  
 [osdever](https://nfsmods.xyz/usermods/16) : Providing information needed for RestoreShaders in Need for Speed Most Wanted.  
 [rx](https://www.youtube.com/c/rxyyy) : Providing information needed for DisableFlareRotation in Need for Speed Carbon.  
