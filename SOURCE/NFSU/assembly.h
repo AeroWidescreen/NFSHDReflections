@@ -163,3 +163,21 @@ void __declspec(naked) ExtendVehicleRenderDistanceCodeCave()
 		jmp ExtendVehicleRenderDistanceCodeCaveExit
 	}
 }
+
+DWORD RealisticChromeCodeCaveExit = 0x40FB19;
+
+void __declspec(naked) RealisticChromeCodeCave()
+{
+	_asm
+	{
+		push ecx
+		mov ecx, dword ptr ds : [0x743C18]
+		mov dword ptr ds : [ecx + 0x71C], 0x3ECCCCCD // Chrome Material Max 0.4
+		mov dword ptr ds : [ecx + 0x70C], 0x3ECCCCCD // Chrome Material Min 0.4
+		pop ecx
+
+		fld dword ptr ds : [esi + 0x38]
+		fmul dword ptr ds : [esi + 0x30]
+		jmp RealisticChromeCodeCaveExit
+	}
+}

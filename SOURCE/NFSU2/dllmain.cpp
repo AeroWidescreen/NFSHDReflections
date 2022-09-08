@@ -162,7 +162,7 @@ void Init()
 
 	if (ExtendRenderDistance)
 	{
-		// Extends vehicle reflection distance so skybox is visible
+		// Extends vehicle reflection distance
 		injector::MakeJMP(0x5C4FAE, ExtendVehicleRenderDistanceCodeCave, true);
 	}
 

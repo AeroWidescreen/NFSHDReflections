@@ -24,4 +24,5 @@ bool DisableRoadReflection;
 float VehicleReflectionBrightness;
 
 // Extra
+bool RealisticChrome;
 bool ExtendTunnelDistance;

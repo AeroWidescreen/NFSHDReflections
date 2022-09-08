@@ -30,7 +30,8 @@ void Init()
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0);
 
 	// Extra
-	ExtendTunnelDistance = iniReader.ReadInteger("EXTRA", "ExtendTunnelDistance", 1);
+	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
+	ExtendTunnelDistance = iniReader.ReadInteger("EXTRA", "ExtendTunnelDistance", 0);
 
 	if (HDReflections)
 	{
@@ -79,15 +80,14 @@ void Init()
 
 	if (ImproveReflectionLOD)
 	{
-		// Road Reflection (Vehicle) LOD
+		// Road Reflection LOD
 		injector::MakeJMP(0x570FEA, VehicleLODCodeCave, true);
 		injector::MakeJMP(0x5708F0, FEVehicleLODCodeCave, true);
-		// Vehicle Reflection LOD
-		injector::WriteMemory<uint32_t>(0x408FEC, 0x00006002, true);
-		// RVM LOD
-		injector::WriteMemory<uint32_t>(0x408F94, 0x00006002, true);
-		// Road Reflection LOD
 		injector::MakeJMP(0x445F89, RoadReflectionLODCodeCave, true);
+		// Vehicle Reflection LOD
+		injector::WriteMemory<uint32_t>(0x408FEC, 0x00000000, true);
+		// RVM LOD
+		injector::WriteMemory<uint32_t>(0x408F94, 0x00000000, true);
 	}
 
 	if (AspectRatioFix)
@@ -113,16 +113,15 @@ void Init()
 	{
 		// Restores skybox for RVM
 		injector::MakeJMP(0x409784, RestoreMirrorSkyboxCodeCave, true);
-		// Extends RVM distance so skybox is visible
-		injector::WriteMemory<uint32_t>(0x6B6CC0, 0x461C4000, true);
 		// Restores skybox for vehicle reflection
 		injector::MakeJMP(0x40970D, RestoreVehicleSkyboxCodeCave, true);
-		// Extends vehicle reflection render distance so skybox is visible
-		injector::MakeJMP(0x40B2EC, ExtendVehicleRenderDistanceCodeCave, true);
 		// Restores skybox for road reflection
 		injector::MakeJMP(0x4095EA, RestoreRoadSkyboxCodeCave, true);
 		// Enables skybox
 		injector::MakeNOP(0x57187B, 2, true);
+		// Extends vehicle reflection render distance so skybox is visible
+		injector::MakeJMP(0x40B2EC, ExtendVehicleRenderDistanceCodeCave, true);
+		injector::MakeNOP(0x40B2F1, 3, true);
 	}
 
 	if (DisableRoadReflection)
@@ -140,6 +139,13 @@ void Init()
 		injector::WriteMemory(0x4AE57E, &TunnelDistance, true);
 		// Vehicle Reflection
 		injector::WriteMemory(0x4AE59A, &TunnelDistance, true);
+	}
+
+	if (RealisticChrome)
+	{
+		// Changes the chrome material
+		injector::MakeJMP(0x40FB13, RealisticChromeCodeCave, true);
+		injector::MakeNOP(0x40FB18, 1, true);
 	}
 
 	if (VehicleReflectionBrightness)
