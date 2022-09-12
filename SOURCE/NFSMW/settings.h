@@ -21,6 +21,7 @@ bool RestoreShaders;
 bool RestoreShadows;
 bool RestoreDetails;
 bool RestoreBackfaceCulling;
+bool RestoreWaterReflections;
 bool OptimizeRenderDistance;
 float VehicleReflectionBrightness;
 

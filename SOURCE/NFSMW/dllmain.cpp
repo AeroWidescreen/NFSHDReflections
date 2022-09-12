@@ -22,12 +22,13 @@ void Init()
 	MirrorScale = iniReader.ReadFloat("RESOLUTION", "MirrorScale", 1.0f);
 
 	// General
-	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 2);
+	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
 	RestoreShaders = iniReader.ReadInteger("GENERAL", "RestoreShaders", 1);
 	RestoreShadows = iniReader.ReadInteger("GENERAL", "RestoreShadows", 1);
 	RestoreVisualTreatment = iniReader.ReadInteger("GENERAL", "RestoreVisualTreatment", 1);
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
 	RestoreBackfaceCulling = iniReader.ReadInteger("GENERAL", "RestoreBackfaceCulling", 1);
+	RestoreWaterReflections = iniReader.ReadInteger("GENERAL", "RestoreWaterReflections", 0);
 	OptimizeRenderDistance = iniReader.ReadInteger("GENERAL", "OptimizeRenderDistance", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0f);
 
@@ -153,6 +154,13 @@ void Init()
 		// Enables Visual Treatment for Mirror
 		injector::MakeJMP(0x6DE9F8, VisualTreatmentMirrorEnablerCodeCave, true);
 		injector::MakeNOP(0x6DE9FD, 1, true);
+	}
+
+	if (RestoreWaterReflections)
+	{
+		// Enables rendering for water / road reflections at all times
+		injector::MakeNOP(0x6BFEF7, 2, true);
+		injector::MakeNOP(0x6DE508, 2, true);
 	}
 
 	if (OptimizeRenderDistance)
