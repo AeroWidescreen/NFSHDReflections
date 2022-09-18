@@ -27,5 +27,7 @@ bool ExtendRenderDistance;
 float VehicleReflectionBrightness;
 
 // Extra
+bool ImproveMotionBlur;
+float MotionBlurStrength;
 bool ExpandMemoryPools;
 bool RealisticChrome;

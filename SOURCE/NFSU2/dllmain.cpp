@@ -30,9 +30,11 @@ void Init()
 	RestoreSkybox = iniReader.ReadInteger("GENERAL", "RestoreSkybox", 1);
 	RestoreHeadlights = iniReader.ReadInteger("GENERAL", "RestoreHeadlights", 1);
 	ExtendRenderDistance = iniReader.ReadInteger("GENERAL", "ExtendRenderDistance", 1);
-	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0);
+	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0f);
 
 	// Extra
+	ImproveMotionBlur = iniReader.ReadInteger("EXTRA", "ImproveMotionBlur", 0);
+	MotionBlurStrength = iniReader.ReadFloat("EXTRA", "MotionBlurStrength", 1.0f);
 	ExpandMemoryPools = iniReader.ReadInteger("EXTRA", "ExpandMemoryPools", 1);
 	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
 
@@ -192,6 +194,39 @@ void Init()
 		injector::WriteMemory<uint32_t>(0x48CD6C, 0xFA000, true);
 		injector::WriteMemory<uint32_t>(0x48CD91, 0xFA000, true);
 		injector::WriteMemory<uint32_t>(0x48CDA2, 0xFA000, true);
+	}
+
+	if (ImproveMotionBlur)
+	{
+		// Force Enable Depth of Field
+		// Required for better "Xbox 360" Motion Blur, so the entire screen isn't blurred.
+		injector::WriteMemory<uint8_t>(0x49C23D, 0xB9, true); // mov ecx, 00000000
+		injector::WriteMemory<uint32_t>(0x49C23E, 0x00000000, true); // mov ecx, 00000000
+		injector::MakeNOP(0x49C242, 1, true); // nop
+		injector::MakeNOP(0x5BE8B4, 5, true); // nop
+		injector::WriteMemory<uint8_t>(0x870CF0, 0x01, true); // Depth of Field Bool
+		// Enables better "Xbox 360" Motion Blur
+		injector::WriteMemory<uint8_t>(0x5D29CF, 0xEB, true); // jmp 0x5D29DD
+		// Motion Blur Distance
+		static float MotionBlurDistance = 0.0100f;
+		injector::WriteMemory<float>(0x5D2A2B, MotionBlurDistance, true);
+		// Depth of Field Distance
+		static float DepthOfFieldDistance = 0.0009765625f / MotionBlurDistance;
+		injector::WriteMemory(0x5D2A70, &DepthOfFieldDistance, true);
+		// Speed For Min Motion Blur
+		injector::WriteMemory<float>(0x7FF7B0, 1.0f, true); // 25.0f = original
+		// Speed For Max Motion Blur
+		injector::WriteMemory<float>(0x7FF7B4, 250.0f, true); // 125.0f = original
+	}
+
+	if (MotionBlurStrength > 0)
+	{
+		// Controls the amount of motion blur
+		static float MotionBlurFloat = MotionBlurStrength * 1.20f;
+		injector::WriteMemory(0x5CC72A, &MotionBlurFloat, true);
+		injector::WriteMemory(0x5CC73A, &MotionBlurFloat, true);
+		injector::WriteMemory(0x5CC74A, &MotionBlurFloat, true);
+		injector::WriteMemory(0x5CC758, &MotionBlurFloat, true);
 	}
 
 	if (RealisticChrome)
