@@ -28,6 +28,7 @@ void Init()
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
 	ReflectionContrast = iniReader.ReadInteger("GENERAL", "ReflectionContrast", 1);
 	TrueFlareSize = iniReader.ReadInteger("GENERAL", "TrueFlareSize", 0);
+	CopFlareScale = iniReader.ReadFloat("GENERAL", "CopFlareScale", 1.0f);
 	ForceEnvironmentMap = iniReader.ReadInteger("GENERAL", "ForceEnvironmentMap", 0);
 	AlignmentFix = iniReader.ReadInteger("GENERAL", "AlignmentFix", 1);
 	AspectRatioFix = iniReader.ReadInteger("GENERAL", "AspectRatioFix", 1);
@@ -158,6 +159,11 @@ void Init()
 		{
 			injector::MakeNOP(0x750A3B, 2, true); // Rearview Mirror
 		}
+	}
+
+	if (CopFlareScale)
+	{
+		injector::MakeJMP(0x74DB8D, VehicleReflFlareSizeCodeCave, true);
 	}
 
 	if (AlignmentFix)

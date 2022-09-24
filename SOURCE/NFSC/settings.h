@@ -22,6 +22,7 @@ bool ImproveReflectionLOD;
 int RestoreDetails;
 int ReflectionContrast;
 int TrueFlareSize;
+float CopFlareScale;
 int ForceEnvironmentMap;
 bool AlignmentFix;
 bool AspectRatioFix;

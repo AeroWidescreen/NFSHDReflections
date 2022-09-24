@@ -752,6 +752,41 @@ void __declspec(naked) VehicleReflBrakeFlareSizeCodeCave()
 	}
 }
 
+DWORD loc_74DB98 = 0x74DB98;
+DWORD loc_74DB92 = 0x74DB92;
+
+void __declspec(naked) VehicleReflFlareSizeCodeCave()
+{
+	_asm
+	{
+		mov edx, dword ptr ds : [ebp + 0x08]
+		mov edx, dword ptr ds : [edx + 0x08]
+		cmp edx, 0x16
+		jl ExitCode
+		cmp edx, 0x1B
+		jg ExitCode
+		lea edx, dword ptr ds : [esi + 0x04]
+		cmp edx, 0xA6BB0C // Blue Flare
+		je VehicleReflFlareSize
+		cmp edx, 0xA6BB38 // Red Flare
+		je VehicleReflFlareSize
+		//cmp edx, 0xA6BB64 // White Flare
+		//je VehicleReflFlareSize
+		jmp ExitCode
+
+	VehicleReflFlareSize:
+		fld dword ptr ds : [esi + 0x04]
+		fsub dword ptr ds : [esi]
+		fmul dword ptr ds : [CopFlareScale]
+		jmp loc_74DB98
+
+	ExitCode:
+		fld dword ptr ds : [esi + 0x04]
+		fsub dword ptr ds : [esi]
+		jmp loc_74DB92
+	}
+}
+
 DWORD VisualTreatmentCodeCaveExit = 0x71D706;
 
 void __declspec(naked) VisualTreatmentCodeCave()
