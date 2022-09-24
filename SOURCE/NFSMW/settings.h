@@ -16,6 +16,7 @@ float MirrorScale;
 
 // General
 bool ImproveReflectionLOD;
+bool ForceEnableMirror;
 bool RestoreVisualTreatment;
 bool RestoreShaders;
 bool RestoreShadows;

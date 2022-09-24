@@ -23,6 +23,7 @@ void Init()
 
 	// General
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
+	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
 	RestoreShaders = iniReader.ReadInteger("GENERAL", "RestoreShaders", 1);
 	RestoreShadows = iniReader.ReadInteger("GENERAL", "RestoreShadows", 1);
 	RestoreVisualTreatment = iniReader.ReadInteger("GENERAL", "RestoreVisualTreatment", 1);
@@ -120,6 +121,14 @@ void Init()
 		if (RestoreDetails >= 2)
 		// Adds missing particle effects to the rearview mirror
 		injector::MakeJMP(0x6DE9E3, EnableParticlesCodeCave, true);
+	}
+
+	if (ForceEnableMirror)
+	{
+		// Enables the mirror for all camera views
+		injector::MakeNOP(0x6CFB72, 2, true);
+		injector::MakeNOP(0x6CFBC5, 2, true);
+		injector::WriteMemory<uint16_t>(0x595DDD, 0x14EB, true);
 	}
 
 	if (RestoreBackfaceCulling)
