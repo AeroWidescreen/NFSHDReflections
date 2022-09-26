@@ -6,6 +6,8 @@ int RoadResY = 240;
 int VehicleRes = 128;
 int MirrorResX = 256;
 int MirrorResY = 256;
+int BlurResX = 320;
+int BlurResY = 240;
 
 // Resolution
 bool HDReflections;

@@ -45,6 +45,8 @@ void Init()
 		VehicleRes = GetSystemMetrics(SM_CYSCREEN);
 		MirrorResX = GetSystemMetrics(SM_CYSCREEN) / 2;
 		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 6;
+		BlurResX = GetSystemMetrics(SM_CXSCREEN) / 2;
+		BlurResY = GetSystemMetrics(SM_CYSCREEN) / 2;
 	}
 
 	// Writes Resolution Values
@@ -65,6 +67,10 @@ void Init()
 		// Aspect ratio without RVM_MASK is 3:1
 		injector::WriteMemory<uint32_t>(0x7FEE80, MirrorResX * MirrorScale, true);
 		injector::WriteMemory<uint32_t>(0x7FEE84, MirrorResY * MirrorScale, true);
+		// Gaussian Blur Effect (Road Reflections / DOF)
+		injector::WriteMemory<uint32_t>(0x5BA100, BlurResX, true);
+		injector::WriteMemory<uint32_t>(0x5BA105, BlurResY, true);
+
 
 		if (OldGPUCompatibility)
 		{
@@ -87,7 +93,9 @@ void Init()
 	{		
 		// Road Reflection LOD
 		injector::MakeJMP(0x631665, VehicleLODCodeCave, true);
+		injector::MakeNOP(0x63166A, 3, true);
 		injector::MakeJMP(0x6311E4, FEVehicleLODCodeCave, true);
+		injector::MakeNOP(0x6311E9, 3, true);
 		injector::WriteMemory<uint32_t>(0x5B9D30, 0x00000100, true);
 		injector::WriteMemory<uint8_t>(0x5D67A6, 0x01, true);
 		// Vehicle Reflection LOD
@@ -119,7 +127,7 @@ void Init()
 
 	if (FrontEndReflectionBlur)
 	{
-		// Enables gaussian blur in the front end
+		// Enables blur in the front end
 		injector::MakeNOP(0x5CAC3A, 2, true);
 	}
 
