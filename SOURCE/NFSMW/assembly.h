@@ -66,7 +66,7 @@ void __declspec(naked) RestoreDetailsCodeCave()
 		lea ecx, dword ptr ds : [esp + 0xE8]
 		call sub_723FA0
 		call sub_6E2F50
-		cmp byte ptr ds : [ImproveReflectionLOD] , 0x02
+		cmp byte ptr ds : [ImproveReflectionLOD] , 0x01
 		jl RestoreDetailsCodeCave_NoDestroyableObjects
 		// destroyable objects
 		push 0x00
