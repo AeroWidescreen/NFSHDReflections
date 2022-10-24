@@ -20,7 +20,7 @@ bool ForceEnableMirror;
 bool RestoreVisualTreatment;
 bool RestoreShaders;
 bool RestoreShadows;
-bool RestoreDetails;
+int RestoreDetails;
 bool RestoreBackfaceCulling;
 bool RestoreWaterReflections;
 bool OptimizeRenderDistance;
