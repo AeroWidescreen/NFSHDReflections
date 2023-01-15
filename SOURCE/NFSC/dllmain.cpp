@@ -128,6 +128,8 @@ void Init()
 			// Adds particle effects to mirror
 			injector::MakeJMP(0x72E453, MirrorParticleEffectsCodeCave, true);
 			injector::MakeNOP(0x72E458, 5, true);
+			injector::MakeJMP(0x75AB34, MirrorParticleEffectsCodeCave2, true);
+			injector::MakeNOP(0x75AB39, 1, true);
 		}
 	}
 

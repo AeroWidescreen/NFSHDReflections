@@ -728,6 +728,23 @@ void __declspec(naked) MirrorParticleEffectsCodeCave()
 	}
 }
 
+DWORD sub_754BF0 = 0x754BF0;
+DWORD MirrorParticleEffectsCodeCave2Exit = 0x75AB3A;
+
+void __declspec(naked) MirrorParticleEffectsCodeCave2()
+{
+	_asm
+	{
+		push edi
+		cmp dword ptr ds : [edi + 0x08], 0x01
+		jne ExitCode // jumps if not Main render
+		call sub_754BF0
+
+	ExitCode:
+		jmp MirrorParticleEffectsCodeCave2Exit
+	}
+}
+
 void __declspec(naked) VehicleReflBrakeFlareSizeCodeCave()
 {
 	_asm
