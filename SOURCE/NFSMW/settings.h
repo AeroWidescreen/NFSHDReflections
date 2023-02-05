@@ -28,3 +28,4 @@ float VehicleReflectionBrightness;
 
 // Extra
 bool ExpandMemoryPools;
+bool DisableBackFaceCulling;

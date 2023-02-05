@@ -214,7 +214,8 @@ void Init()
 		injector::MakeNOP(0x5BE8B4, 5, true); // nop
 		injector::WriteMemory<uint8_t>(0x870CF0, 0x01, true); // Depth of Field Bool
 		// Enables better "Xbox 360" Motion Blur
-		injector::WriteMemory<uint8_t>(0x5D29CF, 0xEB, true); // jmp 0x5D29DD
+		injector::MakeJMP(0x5D29CF, ImproveMotionBlurEnablerCodeCave, true);
+		injector::MakeNOP(0x5D29D4, 4, true);
 		// Motion Blur Distance
 		static float MotionBlurDistance = 0.0100f;
 		injector::WriteMemory<float>(0x5D2A2B, MotionBlurDistance, true);

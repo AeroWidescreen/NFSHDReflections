@@ -509,3 +509,20 @@ void __declspec(naked) RestoreEnhancedContrastCodeCave()
 		jmp loc_5CAEF3
 	}
 }
+
+DWORD loc_5D29DD = 0x5D29DD;
+DWORD ImproveMotionBlurEnablerCodeCaveExit = 0x5D29D8;
+
+void __declspec(naked) ImproveMotionBlurEnablerCodeCave()
+{
+	_asm
+	{
+		cmp byte ptr ds : [0x8654A4], 0x06 // jumps if not frontend
+		je Enable
+		mov byte ptr ds : [0x8707CC], 0x00
+		jmp ImproveMotionBlurEnablerCodeCaveExit
+
+	Enable:
+		jmp loc_5D29DD
+	}
+}

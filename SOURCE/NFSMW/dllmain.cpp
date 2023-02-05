@@ -35,6 +35,7 @@ void Init()
 
 	// Extra
 	ExpandMemoryPools = iniReader.ReadInteger("EXTRA", "ExpandMemoryPools", 1);
+	DisableBackFaceCulling = iniReader.ReadInteger("EXTRA", "DisableBackFaceCulling", 0);
 
 	if (HDReflections)
 	{
@@ -206,6 +207,11 @@ void Init()
 		injector::WriteMemory<uint32_t>(0x5009DC, 0xFA000, true);
 		injector::WriteMemory<uint32_t>(0x500A01, 0xFA000, true);
 		injector::WriteMemory<uint32_t>(0x500A12, 0xFA000, true);
+	}
+
+	if (DisableBackFaceCulling)
+	{
+		injector::WriteMemory<byte>(0x8FAE44, 0x00, true);
 	}
 }
 	
