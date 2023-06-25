@@ -1,25 +1,68 @@
 #pragma once
 
-DWORD RestoreFEReflectionCodeCaveExit = 0x6BD502;
+DWORD RoadReflectionResCodeCave1Exit = 0x6BCDFA;
 
-void __declspec(naked) RestoreFEReflectionCodeCave()
+void __declspec(naked) RoadReflectionResCodeCave1()
 {
-	_asm 
+	_asm
 	{
-		mov ecx, 0x100
-		jmp RestoreFEReflectionCodeCaveExit
+		mov edi, 0x000000F0
+		push RoadResY
+		mov esi, 0x00000140
+		push RoadResX
+		jmp RoadReflectionResCodeCave1Exit
 	}
 }
 
-DWORD VehicleReflectionCodeCaveExit = 0x6BD533;
+DWORD RoadReflectionResCodeCave2Exit = 0x6BCE38;
 
-void __declspec(naked) VehicleReflectionCodeCave()
+void __declspec(naked) RoadReflectionResCodeCave2()
 {
-	_asm 
+	_asm
 	{
-		mov edi, dword ptr ds : [0x8F8FF4]
-		mov edx, dword ptr ds : [0x8F8FF8]
-		jmp VehicleReflectionCodeCaveExit
+		push RoadResY
+		push RoadResX
+		push eax
+		call dword ptr ds : [ecx + 0x74]
+		jmp RoadReflectionResCodeCave2Exit
+	}
+}
+
+DWORD VehicleReflectionResCodeCave1Exit = 0x6BD547;
+
+void __declspec(naked) VehicleReflectionResCodeCave1()
+{
+	_asm
+	{
+		push 0x01
+		push 0x01
+		push VehicleRes
+		jmp VehicleReflectionResCodeCave1Exit
+	}
+}
+
+DWORD VehicleReflectionResCodeCave2Exit = 0x6BD595;
+
+void __declspec(naked) VehicleReflectionResCodeCave2()
+{
+	_asm
+	{
+		push VehicleRes
+		push VehicleRes
+		push eax
+		call dword ptr ds : [edx + 0x74]
+		jmp VehicleReflectionResCodeCave2Exit
+	}
+}
+
+DWORD VehicleReflectionResCodeCave3Exit = 0x6BD34A;
+
+void __declspec(naked) VehicleReflectionResCodeCave3()
+{
+	_asm
+	{
+		mov edx, dword ptr ds : [VehicleRes]
+		jmp VehicleReflectionResCodeCave3Exit
 	}
 }
 

@@ -48,27 +48,31 @@ void Init()
 
 	// Writes Resolution Values
 	{
-		injector::MakeJMP(0x6BD4FC, RestoreFEReflectionCodeCave, true);
-		injector::MakeJMP(0x6BD52D, VehicleReflectionCodeCave, true);
-		// Road Reflection X
-		injector::WriteMemory<uint32_t>(0x6CFC26, RoadResX * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x6BCDF5, RoadResX * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x6BD17D, RoadResX * RoadScale, true);
-		// Road Reflection Y
-		injector::WriteMemory<uint32_t>(0x6BD184, RoadResY * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x6CFC2D, RoadResY * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x6BCDEF, RoadResY * RoadScale, true);
+		// Road Reflection
+		RoadResX = (RoadResX * RoadScale);
+		RoadResY = (RoadResY * RoadScale);
+		injector::WriteMemory<uint32_t>(0x6CFC26, RoadResX, true);
+		injector::WriteMemory<uint32_t>(0x6CFC2D, RoadResY, true);
+		injector::MakeJMP(0x6BCDEE, RoadReflectionResCodeCave1, true);
+		injector::MakeJMP(0x6BCE32, RoadReflectionResCodeCave2, true);
+		injector::MakeNOP(0x6BCE37, 1, true);
 		// Rearview Mirror
-		// Aspect ratio is based on NFSU2 because true aspect ratio is unknown
-		injector::WriteMemory<uint32_t>(0x8F9008, MirrorResX * MirrorScale, true);
-		injector::WriteMemory<uint32_t>(0x8F900C, MirrorResY * MirrorScale, true);
+		MirrorResX = (MirrorResX * MirrorScale);
+		MirrorResY = (MirrorResY * MirrorScale);
+		injector::WriteMemory<uint32_t>(0x8F9008, MirrorResX, true);
+		injector::WriteMemory<uint32_t>(0x8F900C, MirrorResY, true);
 		// Vehicle Reflection
-		injector::WriteMemory<uint32_t>(0x8F8FF4, VehicleRes * VehicleScale, true);
-		
+		VehicleRes = (VehicleRes * VehicleScale);
+		injector::MakeJMP(0x6BD542, VehicleReflectionResCodeCave1, true);
+		injector::MakeJMP(0x6BD58F, VehicleReflectionResCodeCave2, true);
+		injector::MakeNOP(0x6BD594, 1, true);
+		injector::MakeJMP(0x6BD344, VehicleReflectionResCodeCave3, true);
+		injector::MakeNOP(0x6BD349, 1, true);
+	
 		if (OldGPUCompatibility)
 		{
 			// Rounds vehicle resolution down to the nearest power of two
-			static int VehicleRes_POT = (VehicleRes * VehicleScale);
+			static int VehicleRes_POT = VehicleRes;
 			VehicleRes_POT--;
 			VehicleRes_POT |= VehicleRes_POT >> 1;
 			VehicleRes_POT |= VehicleRes_POT >> 2;
@@ -78,7 +82,7 @@ void Init()
 			VehicleRes_POT++;
 			if (VehicleRes_POT > GetSystemMetrics(SM_CYSCREEN))
 			{VehicleRes_POT = VehicleRes_POT / 2;}
-			injector::WriteMemory<uint32_t>(0x8F8FF4, VehicleRes_POT, true);
+			VehicleRes = VehicleRes_POT;
 		}
 	}
 
