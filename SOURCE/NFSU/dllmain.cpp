@@ -24,7 +24,7 @@ void Init()
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
 	AspectRatioFix = iniReader.ReadInteger("GENERAL", "AspectRatioFix", 1);
 	RealFrontEndReflections = iniReader.ReadInteger("GENERAL", "RealFrontEndReflections", 0);
-	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
+	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 0);
 	RestoreSkybox = iniReader.ReadInteger("GENERAL", "RestoreSkybox", 1);
 	DisableRoadReflection = iniReader.ReadInteger("GENERAL", "DisableRoadReflection", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0);

@@ -25,7 +25,7 @@ void Init()
 	AspectRatioFix = iniReader.ReadInteger("GENERAL", "AspectRatioFix", 1);
 	RemoveParticleEffects = iniReader.ReadInteger("GENERAL", "RemoveParticleEffects", 1);
 	FrontEndReflectionBlur = iniReader.ReadInteger("GENERAL", "FrontEndReflectionBlur", 1);
-	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
+	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 0);
 	RestoreEnhancedContrast = iniReader.ReadInteger("GENERAL", "RestoreEnhancedContrast", 1);
 	RestoreSkybox = iniReader.ReadInteger("GENERAL", "RestoreSkybox", 1);
 	RestoreHeadlights = iniReader.ReadInteger("GENERAL", "RestoreHeadlights", 1);

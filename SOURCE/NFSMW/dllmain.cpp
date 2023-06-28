@@ -92,7 +92,7 @@ void Init()
 		injector::WriteMemory<uint32_t>(0x6BFEBD, 0x00006002, true);
 		// RVM LOD
 		injector::WriteMemory<uint32_t>(0x6BFE58, 0x00006002, true);
-		// Bypasses widescreen fix LOD changes
+		// Bypasses old Widescreen Fix LOD changes
 		injector::MakeJMP(0x6BFE3D, LODBypassCodeCave, true);
 		injector::MakeNOP(0x6BFE42, 1, true);
 		// Road Reflection LOD
@@ -102,9 +102,6 @@ void Init()
 		// Full Road Reflection LOD
 		injector::WriteMemory<uint8_t>(0x6BFF21, 0x06, true);
 		injector::WriteMemory<uint8_t>(0x7293DB, 0x06, true);
-		// Fixes Car Model Position in Road Reflection
-		injector::MakeJMP(0x74E709, CarModelRoadReflectionCodeCave, true);
-		injector::MakeNOP(0x74E70E, 1, true);
 	}
 
 	if (RestoreDetails >= 1)
@@ -172,7 +169,7 @@ void Init()
 
 	if (RestoreWaterReflections)
 	{
-		// Enables rendering for water / road reflections at all times
+		// Enables rendering for planar reflections at all times
 		injector::MakeNOP(0x6BFEF7, 2, true);
 		injector::MakeNOP(0x6DE508, 2, true);
 	}
@@ -197,15 +194,12 @@ void Init()
 		// GManager::PreloadTransientVaults (0x2C8000)
 		injector::WriteMemory<short>(0x5F7396, 0x2C80, true);
 		injector::WriteMemory<short>(0x5F73B2, 0x2C80, true);
-
 		// InitializeEverything (0x8000)
 		injector::WriteMemory<BYTE>(0x665FDC, 0x80, true);
-
 		// FEngMemoryPoolSize (InitFEngMemoryPool)
 		injector::WriteMemory<DWORD>(0x8F5790, 0x0BE6E0, true);
 		// CarLoaderPoolSizes
 		injector::WriteMemory<DWORD>(0x8F7EF0, 0x01CC00, true);
-
 		// Fixes disappearing objects
 		injector::WriteMemory<uint32_t>(0x5009D2, 0xFA000, true);
 		injector::WriteMemory<uint32_t>(0x5009DC, 0xFA000, true);
