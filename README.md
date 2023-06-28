@@ -31,16 +31,16 @@ Q: **What are the system requirements?**
 A: It depends on your resolution, settings, and other graphical enhancements being used. For 1080p, an NVIDIA GTX 1060 / AMD RX 480 should be more than enough for default settings.  
 
 Q: **Why is a No-CD fix required?**  
-A: Need for Speed games have protections (DRM) that make it difficult to view and modify their code, so No-CD patches are often recommended when using ASI scripts. In addition, the memory addresses in my scripts are all harcoded, so it's not something I can easily change. If you're concerned about viruses, ask the community on the NFSMods Discord to help you acquire these patches from a trusted source.  
+A: Need for Speed games have protections (DRM) that make it difficult to view and modify their code, so No-CD patches are often recommended when using ASI scripts. In addition, the memory addresses in my scripts are all hardcoded, so it's not something I can easily change. If you're concerned about malware, ask the community on the NFSMods Discord to help you acquire these patches from a safe source.   
 
 Q: **Why is the latest version of the Widescreen Fix recommended?**  
-A: Most of the features I make are often designed to work with the Widescreen Fix, as I'm heavily involved in the development of both mods. Carbon's "ReflectionContrast" and "LightingFix" features are a good example of this. The Widescreen Fix also provides a solid foundation that everyone should use, since it corrects visual and technical errors the PC ports have.  
+A: Most of the features I make are often designed to work with the Widescreen Fix. Carbon's "ReflectionContrast" (HD Reflections) and "LightingFix" (Widescreen Fix) features are a good example of this. The Widescreen Fix also provides a solid foundation that everyone should use, since it corrects visual and technical errors the PC ports have.  
 
 Q: **Why don't I have water reflections like your screenshot of Need for Speed Most Wanted?**  
-A: Install Xbox 360 Stuff Pack by osdever & elaymm4. My screenshots simply demonstrate the improvement in resolution and detail.  
+A: Install Xbox 360 Stuff Pack. My screenshots simply demonstrate the improvement in resolution and detail.  
 
 Q: **What happened to the old mod pages?**  
-A: They've been deleted. I've decided to consolidate everything into a single package; this applies to the download page and the source code. It's easier for me to manage and more convenient for the people downloading them.    
+A: I've decided to consolidate everything into a single package; this applies to the download page and the source code. It's easier for me to manage and more convenient for people downloading them.  
 
  ## Credits
 [Aero_](https://github.com/AeroWidescreen) : Creator of NFS HD Reflections.  
