@@ -30,7 +30,7 @@ void Init()
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
 	RestoreBackfaceCulling = iniReader.ReadInteger("GENERAL", "RestoreBackfaceCulling", 1);
 	RestoreWaterReflections = iniReader.ReadInteger("GENERAL", "RestoreWaterReflections", 0);
-	RemoveLastGenSunFlare = iniReader.ReadInteger("GENERAL", "RemoveLastGenSunFlare", 1);
+	RemoveLastGenTextures = iniReader.ReadInteger("GENERAL", "RemoveLastGenTextures", 1);
 	OptimizeRenderDistance = iniReader.ReadInteger("GENERAL", "OptimizeRenderDistance", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0f);
 
@@ -175,9 +175,11 @@ void Init()
 		injector::MakeNOP(0x6DE508, 2, true);
 	}
 
-	if (RemoveLastGenSunFlare)
+	if (RemoveLastGenTextures)
 	{
-		// Removes a flare texture from vehicle reflections and rearview mirror
+		// Removes the "2PLAYERHEADLIGHT" texture from planar reflections
+		injector::MakeNOP(0x738207, 5, true);
+		// Removes sun flare texture from reflections and rearview mirror
 		injector::MakeNOP(0x504C56, 5, true);
 	}
 
