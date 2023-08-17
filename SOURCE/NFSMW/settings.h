@@ -23,7 +23,7 @@ bool RestoreShadows;
 int RestoreDetails;
 bool RestoreBackfaceCulling;
 bool RestoreWaterReflections;
-bool RemoveLastGenTextures;
+int RemoveLastGenEffects;
 bool OptimizeRenderDistance;
 float VehicleReflectionBrightness;
 
