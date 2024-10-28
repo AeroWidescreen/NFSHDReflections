@@ -44,6 +44,7 @@ A: I've decided to consolidate everything into a single package; this applies to
 
  ## Credits
 [Aero_](https://github.com/AeroWidescreen) : Creator of NFS HD Reflections.  
+[ExOpts Team](https://github.com/ExOptsTeam) : This project is based on Extra Options and it wouldn't exist without them.  
 
  ## Thanks
 [Archie](https://nfsmods.xyz/user/213) : Providing information needed for RestoreDetails in Need for Speed Carbon, and RestoreHeadlights in Need for Speed Underground 2.  
