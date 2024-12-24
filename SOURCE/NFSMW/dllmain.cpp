@@ -120,6 +120,8 @@ void Init()
 		injector::WriteMemory<uint8_t>(0x729479, 0xEB, true);
 		// Adds missing car shadow to the rearview mirror
 		injector::MakeJMP(0x74E812, EnableCarShadowCodeCave, true);
+		// Adds missing car flares to cubemap
+		injector::WriteMemory<uint8_t>(0x6DE81D, 0x00, true);
 
 		if (RestoreDetails >= 2)
 		// Adds missing particle effects to the rearview mirror
@@ -189,6 +191,7 @@ void Init()
 		injector::MakeJMP(0x6E73A1, RenderDistanceCodeCave, true);
 		injector::MakeNOP(0x6DB5AB, 6, true);
 		injector::MakeJMP(0x6DB5BE, SkyboxRenderDistanceCodeCave, true);
+		injector::MakeNOP(0x6DB5C3, 1, true);
 	}
 
 	if (VehicleReflectionBrightness)

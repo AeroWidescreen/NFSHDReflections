@@ -272,19 +272,16 @@ void __declspec(naked) RenderDistanceCodeCave()
 		push ebx
 		push 0x00
 		mov ecx, edi
-		cmp dword ptr ds : [esi + 0x04] , 0x12 // Vehicle Reflection
+		cmp dword ptr ds : [esi + 0x04] , 0x12 // Vehicle Cubemap
 		jnl RenderDistanceCodeCavePart2
 		cmp dword ptr ds : [esi + 0x04] , 0x03 // RVM
-		je RenderDistanceCodeCavePart3
+		je RenderDistanceCodeCavePart2
+		cmp dword ptr ds : [esi + 0x04] , 0x03
 		jmp RenderDistanceCodeCaveExit
 
 	RenderDistanceCodeCavePart2 :
 		cmp dword ptr ds : [esi + 0x04] , 0x03
-		push 0x42C80000 // 100.0f
-		jmp RenderDistanceCodeCaveExit2
-
-	RenderDistanceCodeCavePart3 :
-		push 0x43400000 // 192.0f
+		push 0x43C00000 // 384.0f
 		jmp RenderDistanceCodeCaveExit2
 	}
 }
