@@ -28,6 +28,7 @@ void Init()
 	RestoreShadows = iniReader.ReadInteger("GENERAL", "RestoreShadows", 1);
 	RestoreVisualTreatment = iniReader.ReadInteger("GENERAL", "RestoreVisualTreatment", 1);
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
+	RestoreCars = iniReader.ReadInteger("GENERAL", "RestoreCars", 0);
 	RestoreBackfaceCulling = iniReader.ReadInteger("GENERAL", "RestoreBackfaceCulling", 1);
 	RestoreWaterReflections = iniReader.ReadInteger("GENERAL", "RestoreWaterReflections", 0);
 	RemoveLastGenEffects = iniReader.ReadInteger("GENERAL", "RemoveLastGenEffects", 1);
@@ -126,6 +127,11 @@ void Init()
 		if (RestoreDetails >= 2)
 		// Adds missing particle effects to the rearview mirror
 		injector::MakeJMP(0x6DE9E3, EnableParticlesCodeCave, true);
+	}
+
+	if (RestoreCars)
+	{
+		injector::MakeJMP(0x6DE7CA, DrawCarsForCubemap, true);
 	}
 
 	if (ForceEnableMirror)

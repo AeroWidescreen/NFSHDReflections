@@ -21,6 +21,7 @@ bool RestoreVisualTreatment;
 bool RestoreShaders;
 bool RestoreShadows;
 int RestoreDetails;
+int RestoreCars;
 bool RestoreBackfaceCulling;
 bool RestoreWaterReflections;
 int RemoveLastGenEffects;

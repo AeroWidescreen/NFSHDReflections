@@ -283,12 +283,13 @@ void __declspec(naked) RenderDistanceCodeCave()
 		cmp dword ptr ds : [esi + 0x04], 0x03
 		jmp RenderDistanceCodeCaveExit
 
-	RenderDistanceMirror:
-		push 0x43C00000 // 384.0f
+	RenderDistanceCubemap:
+		cmp dword ptr ds : [esi + 0x04], 0x03
+		push 0x42C80000 // 100.0f
 		jmp RenderDistanceCodeCaveExit2
 
-	RenderDistanceCubemap:
-		push 0x42C80000 // 100.0f
+	RenderDistanceMirror :
+		push 0x43C00000 // 384.0f
 		jmp RenderDistanceCodeCaveExit2
 	}
 }
@@ -735,5 +736,33 @@ void __declspec(naked) FECarModelFixCodeCave()
 		call sub_6E2F50
 		mov dword ptr ds : [0x8FAE6C], 0x02 // Normalize Backface Culling For Everything Else
 		jmp FECarModelFixCodeCaveExit
+	}
+}
+
+DWORD DrawCarsForCubemapExit = 0x6DE7CF;
+
+void __declspec(naked) DrawCarsForCubemap()
+{
+	_asm
+	{
+	cmp byte ptr ds : [RestoreCars],0x01
+	jg FullCubemap
+
+	BackCubemap:
+		push 0x00
+		push 0x919EA0
+		jmp DrawCars
+
+	FullCubemap:
+		push 0x00
+		push esi
+
+	DrawCars:
+		call sub_750B10
+		add esp, 0x08
+		call sub_6E2F50
+
+	ExitCode:
+		jmp DrawCarsForCubemapExit
 	}
 }
