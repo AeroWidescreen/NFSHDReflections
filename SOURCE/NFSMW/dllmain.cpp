@@ -155,10 +155,6 @@ void Init()
 		injector::WriteMemory<uint8_t>(0x6DABD6, 0xEB, true);
 		// Removes road reflection from other reflections
 		injector::MakeJMP(0x6D7289, RemoveRoadReflectionCodeCave, true);
-		// Corrects vehicle reflection world brightness
-		injector::MakeJMP(0x7696A4, VehicleReflBrightnessCodeCave, true);
-		// Fixes flashing when low reflection update rate is used
-		injector::MakeJMP(0x6DA528, VehicleReflBrightnessBugFixCodeCave, true);
 		// Corrects mirror brightness
 		injector::MakeJMP(0x6E7120, MirrorRGBCodeCave, true);
 	}
