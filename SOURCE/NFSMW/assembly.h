@@ -705,18 +705,18 @@ float RGBAmbient = 0.65f;
 float RGBDiffuse = 0.65f;
 float RGBSpecular = 1.0f;
 
-void __declspec(naked) EnvmapBrightnessSub()
+void __declspec(naked) EnvmapBrightnessCodeCave()
 {
 	_asm
 	{
 		push ebp
 		mov ebp, esp
-		and esp, 0xFFFFFFF0
+		and esp, 0xFFFFFFF0 // and esp,-10
 		sub esp, 0x14C
 		push esi
 		mov esi, ecx
 		mov eax, dword ptr ds : [esi + 0x188]
-		mov dword ptr ds : [esp + 0x0C] , eax
+		mov dword ptr ds : [esp + 0x0C], eax
 		fld dword ptr ds : [esp + 0x0C]
 		fcomp dword ptr ds : [0x8B5B04]
 		fnstsw ax
@@ -734,7 +734,7 @@ void __declspec(naked) EnvmapBrightnessSub()
 	loc_7695CB :
 		fsub dword ptr ds : [0x8B5B04]
 		mov ecx, dword ptr ds : [ebp + 0x08]
-		mov dword ptr ds : [esi + 0x160] , ecx
+		mov dword ptr ds : [esi + 0x160], ecx
 		fmul dword ptr ds : [0x890E98]
 		fsubr dword ptr ds : [0x89096C]
 		fstp dword ptr ds : [esi + 0x164]
@@ -744,7 +744,7 @@ void __declspec(naked) EnvmapBrightnessSub()
 		test ah, 0x01
 		jne loc_76960B
 		mov edx, dword ptr ds : [0x905CE8]
-		mov dword ptr ds : [esi + 0x160] , edx
+		mov dword ptr ds : [esi + 0x160], edx
 
 	loc_76960B :
 		call sub_6C0A20
@@ -792,7 +792,7 @@ void __declspec(naked) EnvmapBrightnessSub()
 		lea ecx, dword ptr ds : [esi + 0x20]
 		push edx
 		call sub_769190
-		mov dword ptr ds : [esi + 0x3C] , 0x40800000
+		mov dword ptr ds : [esi + 0x3C], 0x40800000 // 4.0f
 		fld dword ptr ds : [esi + 0x20]
 		fmul dword ptr ds : [RGBAmbient]
 		fstp dword ptr ds : [esi + 0x20]

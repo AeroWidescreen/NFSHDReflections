@@ -160,7 +160,7 @@ void Init()
 		if (CubemapBrightnessFix)
 		{
 			// Corrects environment brightness
-			injector::MakeCALL(0x6DE6B0, EnvmapBrightnessSub, true);
+			injector::MakeCALL(0x6DE6B0, EnvmapBrightnessCodeCave, true);
 		}
 	}
 
