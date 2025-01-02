@@ -19,6 +19,7 @@ bool ImproveReflectionLOD;
 bool ForceEnableMirror;
 bool RestoreVisualTreatment;
 bool RestoreShaders;
+bool CubemapBrightnessFix;
 bool RestoreShadows;
 int RestoreDetails;
 int RestoreCars;

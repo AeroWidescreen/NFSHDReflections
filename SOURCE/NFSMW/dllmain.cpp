@@ -25,6 +25,7 @@ void Init()
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
 	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
 	RestoreShaders = iniReader.ReadInteger("GENERAL", "RestoreShaders", 1);
+	CubemapBrightnessFix = iniReader.ReadInteger("GENERAL", "CubemapBrightnessFix", 1);
 	RestoreShadows = iniReader.ReadInteger("GENERAL", "RestoreShadows", 1);
 	RestoreVisualTreatment = iniReader.ReadInteger("GENERAL", "RestoreVisualTreatment", 1);
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
@@ -155,8 +156,12 @@ void Init()
 		injector::WriteMemory<uint8_t>(0x6DABD6, 0xEB, true);
 		// Removes road reflection from other reflections
 		injector::MakeJMP(0x6D7289, RemoveRoadReflectionCodeCave, true);
-		// Corrects mirror brightness
-		injector::MakeJMP(0x6E7120, MirrorRGBCodeCave, true);
+
+		if (CubemapBrightnessFix)
+		{
+			// Corrects environment brightness
+			injector::MakeCALL(0x6DE6B0, EnvmapBrightnessSub, true);
+		}
 	}
 
 	if (RestoreShadows)

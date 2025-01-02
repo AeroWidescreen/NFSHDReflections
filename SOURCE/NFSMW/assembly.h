@@ -697,3 +697,133 @@ void __declspec(naked) DrawCarsForCubemap()
 		jmp DrawCarsForCubemapExit
 	}
 }
+
+DWORD sub_6C0A20 = 0x6C0A20;
+DWORD sub_768EE0 = 0x768EE0;
+DWORD sub_769190 = 0x769190;
+float RGBAmbient = 0.65f;
+float RGBDiffuse = 0.65f;
+float RGBSpecular = 1.0f;
+
+void __declspec(naked) EnvmapBrightnessSub()
+{
+	_asm
+	{
+		push ebp
+		mov ebp, esp
+		and esp, 0xFFFFFFF0
+		sub esp, 0x14C
+		push esi
+		mov esi, ecx
+		mov eax, dword ptr ds : [esi + 0x188]
+		mov dword ptr ds : [esp + 0x0C] , eax
+		fld dword ptr ds : [esp + 0x0C]
+		fcomp dword ptr ds : [0x8B5B04]
+		fnstsw ax
+		test ah, 0x41
+		jne loc_769640
+		fld dword ptr ds : [esp + 0x0C]
+		fld dword ptr ds : [0x8933D4]
+		fcomp dword ptr ds : [esp + 0x0C]
+		fnstsw ax
+		test ah, 0x05
+		jp loc_7695CB
+		fstp st(0)
+		fld dword ptr ds : [0x8933D4]
+
+	loc_7695CB :
+		fsub dword ptr ds : [0x8B5B04]
+		mov ecx, dword ptr ds : [ebp + 0x08]
+		mov dword ptr ds : [esi + 0x160] , ecx
+		fmul dword ptr ds : [0x890E98]
+		fsubr dword ptr ds : [0x89096C]
+		fstp dword ptr ds : [esi + 0x164]
+		fld dword ptr ds : [0x905CE8]
+		fcomp dword ptr ds : [0x890968]
+		fnstsw ax
+		test ah, 0x01
+		jne loc_76960B
+		mov edx, dword ptr ds : [0x905CE8]
+		mov dword ptr ds : [esi + 0x160] , edx
+
+	loc_76960B :
+		call sub_6C0A20
+		test al, al
+		mov edx, dword ptr ds : [esi + 0x160]
+		je loc_769648
+		lea eax, dword ptr ds : [esi + 0xFC]
+		push eax
+		lea ecx, dword ptr ds : [esi + 0xD4]
+		push ecx
+		push edx
+		lea ecx, dword ptr ds : [esp + 0x1C]
+		call sub_768EE0
+		lea eax, dword ptr ds : [esi + 0xE8]
+		lea ecx, dword ptr ds : [esi + 0xC0]
+		jmp loc_76966C
+
+	loc_769640 :
+		fld dword ptr ds : [0x8B5B04]
+		jmp loc_7695CB
+
+	loc_769648 :
+		lea eax, dword ptr ds : [esi + 0x14C]
+		push eax
+		lea ecx, dword ptr ds : [esi + 0x124]
+		push ecx
+		push edx
+		lea ecx, dword ptr ds : [esp + 0x1C]
+		call sub_768EE0
+		lea eax, dword ptr ds : [esi + 0x138]
+		lea ecx, dword ptr ds : [esi + 0x110]
+
+	loc_76966C :
+		mov edx, dword ptr ds : [esi + 0x160]
+		push eax
+		push ecx
+		lea ecx, dword ptr ds : [esp + 0xB8]
+		push edx
+		call sub_768EE0
+		mov edx, dword ptr ds : [esi + 0x164]
+		lea eax, dword ptr ds : [esp + 0x10]
+		push eax
+		lea ecx, dword ptr ds : [esp + 0xB4]
+		push ecx
+		lea ecx, dword ptr ds : [esi + 0x20]
+		push edx
+		call sub_769190
+		mov dword ptr ds : [esi + 0x3C] , 0x40800000
+		fld dword ptr ds : [esi + 0x20]
+		fmul dword ptr ds : [RGBAmbient]
+		fstp dword ptr ds : [esi + 0x20]
+		fld dword ptr ds : [esi + 0x24]
+		fmul dword ptr ds : [RGBAmbient]
+		fstp dword ptr ds : [esi + 0x24]
+		fld dword ptr ds : [esi + 0x28]
+		fmul dword ptr ds : [RGBAmbient]
+		fstp dword ptr ds : [esi + 0x28]
+		fld dword ptr ds : [esi + 0x30]
+		fmul dword ptr ds : [RGBDiffuse]
+		fstp dword ptr ds : [esi + 0x30]
+		fld dword ptr ds : [esi + 0x34]
+		fmul dword ptr ds : [RGBDiffuse]
+		fstp dword ptr ds : [esi + 0x34]
+		fld dword ptr ds : [esi + 0x38]
+		fmul dword ptr ds : [RGBDiffuse]
+		fstp dword ptr ds : [esi + 0x38]
+		fld dword ptr ds : [esi + 0x40]
+		fmul dword ptr ds : [RGBSpecular]
+		fstp dword ptr ds : [esi + 0x40]
+		fld dword ptr ds : [esi + 0x44]
+		fmul dword ptr ds : [RGBSpecular]
+		fstp dword ptr ds : [esi + 0x44]
+		fld dword ptr ds : [esi + 0x48]
+		fmul dword ptr ds : [RGBSpecular]
+		fstp dword ptr ds : [esi + 0x48]
+		pop esi
+		mov esp, ebp
+		pop ebp
+		ret 0x4
+
+	}
+}
