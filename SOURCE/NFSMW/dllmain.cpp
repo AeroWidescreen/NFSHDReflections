@@ -221,10 +221,10 @@ void Init()
 		// CarLoaderPoolSizes
 		injector::WriteMemory<DWORD>(0x8F7EF0, 0x01CC00, true);
 		// Fixes disappearing objects
-		injector::WriteMemory<uint32_t>(0x5009D2, 0xFA000, true);
-		injector::WriteMemory<uint32_t>(0x5009DC, 0xFA000, true);
-		injector::WriteMemory<uint32_t>(0x500A01, 0xFA000, true);
-		injector::WriteMemory<uint32_t>(0x500A12, 0xFA000, true);
+		injector::WriteMemory<int>(0x5009D2, 2048000, true);
+		injector::WriteMemory<int>(0x5009DC, 2048000, true);
+		injector::WriteMemory<int>(0x500A01, 2048000, true);
+		injector::WriteMemory<int>(0x500A12, 2048000, true);
 	}
 
 	if (DisableBackFaceCulling)
