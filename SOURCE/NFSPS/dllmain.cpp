@@ -33,7 +33,7 @@ void Init()
 
 	if (HDReflections)
 	{
-		VehicleRes = ::GetSystemMetrics(SM_CYSCREEN);
+		VehicleRes = (int)1024;
 	}
 
 	// Writes Resolution Values
@@ -55,8 +55,9 @@ void Init()
 			VehicleRes_POT |= VehicleRes_POT >> 8;
 			VehicleRes_POT |= VehicleRes_POT >> 16;
 			VehicleRes_POT++;
-			if (VehicleRes_POT > GetSystemMetrics(SM_CYSCREEN))
-			{VehicleRes_POT = VehicleRes_POT / 2;}
+			if (VehicleRes_POT > (VehicleRes * Scale))
+			{VehicleRes_POT = VehicleRes_POT >> 1;}
+			VehicleRes = VehicleRes_POT;
 			injector::WriteMemory<uint32_t>(0x4BD062, VehicleRes_POT, true);
 			injector::WriteMemory<uint32_t>(0x4BD24D, VehicleRes_POT, true);
 			injector::WriteMemory<uint32_t>(0x4BD283, VehicleRes_POT, true);

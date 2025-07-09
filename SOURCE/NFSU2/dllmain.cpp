@@ -42,7 +42,7 @@ void Init()
 	{
 		RoadResX = GetSystemMetrics(SM_CXSCREEN);
 		RoadResY = GetSystemMetrics(SM_CYSCREEN);
-		VehicleRes = GetSystemMetrics(SM_CYSCREEN);
+		VehicleRes = (int)1024;
 		MirrorResX = GetSystemMetrics(SM_CYSCREEN) / 2;
 		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 6;
 		BlurResX = GetSystemMetrics(SM_CXSCREEN) / 2;
@@ -83,8 +83,8 @@ void Init()
 			VehicleRes_POT |= VehicleRes_POT >> 8;
 			VehicleRes_POT |= VehicleRes_POT >> 16;
 			VehicleRes_POT++;
-			if (VehicleRes_POT > GetSystemMetrics(SM_CYSCREEN))
-			{VehicleRes_POT = VehicleRes_POT / 2;}
+			if (VehicleRes_POT > (VehicleRes * VehicleScale))
+			{VehicleRes_POT = VehicleRes_POT >> 1;}
 			injector::WriteMemory<uint32_t>(0x7FEE6C, VehicleRes_POT, true);
 		}
 	}
