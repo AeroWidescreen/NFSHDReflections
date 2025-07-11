@@ -676,6 +676,7 @@ void __declspec(naked) DrawCarsForCubemap()
 {
 	_asm
 	{
+	jne ExitCode
 	cmp byte ptr ds : [RestoreCars],0x01
 	jg FullCubemap
 
