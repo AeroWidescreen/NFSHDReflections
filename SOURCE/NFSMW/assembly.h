@@ -676,6 +676,7 @@ void __declspec(naked) DrawCarsForCubemap()
 {
 	_asm
 	{
+	cmp byte ptr ds : [0x91606C], 0x00 // jumps to exit code if NIS is active
 	jne ExitCode
 	cmp byte ptr ds : [RestoreCars],0x01
 	jg FullCubemap
