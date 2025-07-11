@@ -15,17 +15,23 @@ void Init()
 	CIniReader iniReader("NFSMWHDReflections.ini");
 
 	// Resolution
-	HDReflections = iniReader.ReadInteger("RESOLUTION", "HDReflections", 1);
+	AutoRes = iniReader.ReadInteger("RESOLUTION", "AutoRes", 1);
+	Scale = iniReader.ReadFloat("RESOLUTION", "Scale", 1.0f);
 	OldGPUCompatibility = iniReader.ReadInteger("RESOLUTION", "OldGPUCompatibility", 0);
-	VehicleScale = iniReader.ReadFloat("RESOLUTION", "VehicleScale", 1.0f);
-	RoadScale = iniReader.ReadFloat("RESOLUTION", "RoadScale", 1.0f);
-	MirrorScale = iniReader.ReadFloat("RESOLUTION", "MirrorScale", 1.0f);
+	FECubemapRes = iniReader.ReadInteger("RESOLUTION", "FECubemapRes", 256);
+
+	// Custom Resolution
+	CubemapRes = iniReader.ReadInteger("CUSTOM RESOLUTION", "CubemapRes", 256);
+	MirrorResX = iniReader.ReadInteger("CUSTOM RESOLUTION", "MirrorResX", 256);
+	MirrorResY = iniReader.ReadInteger("CUSTOM RESOLUTION", "MirrorResY", 256);
+	RoadResX = iniReader.ReadInteger("CUSTOM RESOLUTION", "RoadResX", 320);
+	RoadResY = iniReader.ReadInteger("CUSTOM RESOLUTION", "RoadResY", 240);
 
 	// General
+	CubemapBrightnessFix = iniReader.ReadInteger("GENERAL", "CubemapBrightnessFix", 1);
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
 	ForceEnableMirror = iniReader.ReadInteger("GENERAL", "ForceEnableMirror", 1);
 	RestoreShaders = iniReader.ReadInteger("GENERAL", "RestoreShaders", 1);
-	CubemapBrightnessFix = iniReader.ReadInteger("GENERAL", "CubemapBrightnessFix", 1);
 	RestoreShadows = iniReader.ReadInteger("GENERAL", "RestoreShadows", 1);
 	RestoreVisualTreatment = iniReader.ReadInteger("GENERAL", "RestoreVisualTreatment", 1);
 	RestoreDetails = iniReader.ReadInteger("GENERAL", "RestoreDetails", 1);
@@ -40,54 +46,61 @@ void Init()
 	ExpandMemoryPools = iniReader.ReadInteger("EXTRA", "ExpandMemoryPools", 1);
 	DisableBackFaceCulling = iniReader.ReadInteger("EXTRA", "DisableBackFaceCulling", 0);
 
-	if (HDReflections)
+	if (AutoRes)
 	{
+		CubemapRes = GetSystemMetrics(SM_CYSCREEN);
+		MirrorResX = GetSystemMetrics(SM_CXSCREEN) / 2;
+		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 6;
 		RoadResX = GetSystemMetrics(SM_CXSCREEN);
 		RoadResY = GetSystemMetrics(SM_CYSCREEN);
-		VehicleRes = (int)1024;
-		MirrorResX = GetSystemMetrics(SM_CYSCREEN) / 2;
-		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 6;
+	}
+
+	// Resolution Multiplier
+	{
+		CubemapRes = CubemapRes * Scale;
+		MirrorResX = MirrorResX * Scale;
+		MirrorResY = MirrorResY * Scale;
+		RoadResX = RoadResX * Scale;
+		RoadResY = RoadResY * Scale;
+	}
+
+	if (OldGPUCompatibility)
+	{
+		// Rounds the cubemap resoltution down to the nearest power of two
+		static int CubemapRes_POT = CubemapRes;
+		CubemapRes_POT--;
+		CubemapRes_POT |= CubemapRes_POT >> 1;
+		CubemapRes_POT |= CubemapRes_POT >> 2;
+		CubemapRes_POT |= CubemapRes_POT >> 4;
+		CubemapRes_POT |= CubemapRes_POT >> 8;
+		CubemapRes_POT |= CubemapRes_POT >> 16;
+		CubemapRes_POT++;
+
+		if (CubemapRes_POT > CubemapRes)
+		{CubemapRes_POT = CubemapRes_POT >> 1;}
+		CubemapRes = CubemapRes_POT;
 	}
 
 	// Writes Resolution Values
 	{
 		// Road Reflection
-		RoadResX = (RoadResX * RoadScale);
-		RoadResY = (RoadResY * RoadScale);
 		injector::WriteMemory<uint32_t>(0x6CFC26, RoadResX, true);
 		injector::WriteMemory<uint32_t>(0x6CFC2D, RoadResY, true);
 		injector::MakeJMP(0x6BCDEE, RoadReflectionResCodeCave1, true);
 		injector::MakeJMP(0x6BCE32, RoadReflectionResCodeCave2, true);
 		injector::MakeNOP(0x6BCE37, 1, true);
 		// Rearview Mirror
-		MirrorResX = (MirrorResX * MirrorScale);
-		MirrorResY = (MirrorResY * MirrorScale);
 		injector::WriteMemory<uint32_t>(0x8F9008, MirrorResX, true);
 		injector::WriteMemory<uint32_t>(0x8F900C, MirrorResY, true);
 		// Vehicle Reflection
-		VehicleRes = (VehicleRes * VehicleScale);
 		injector::MakeJMP(0x6BD542, VehicleReflectionResCodeCave1, true);
 		injector::MakeJMP(0x6BD58F, VehicleReflectionResCodeCave2, true);
 		injector::MakeNOP(0x6BD594, 1, true);
 		injector::MakeJMP(0x6BD344, VehicleReflectionResCodeCave3, true);
 		injector::MakeNOP(0x6BD349, 1, true);
-	
-		if (OldGPUCompatibility)
-		{
-			// Rounds vehicle resolution down to the nearest power of two
-			static int VehicleRes_POT = VehicleRes;
-			VehicleRes_POT--;
-			VehicleRes_POT |= VehicleRes_POT >> 1;
-			VehicleRes_POT |= VehicleRes_POT >> 2;
-			VehicleRes_POT |= VehicleRes_POT >> 4;
-			VehicleRes_POT |= VehicleRes_POT >> 8;
-			VehicleRes_POT |= VehicleRes_POT >> 16;
-			VehicleRes_POT++;
-	
-			if (VehicleRes_POT > (VehicleRes))
-			{VehicleRes_POT = VehicleRes_POT >> 1;}
-			VehicleRes = VehicleRes_POT;
-		}
+		// Front-End Cubemap
+		injector::WriteMemory(0x6BD4FE, &FECubemapRes, true);
+
 	}
 
 	if (ImproveReflectionLOD)

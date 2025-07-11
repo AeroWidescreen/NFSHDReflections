@@ -36,7 +36,7 @@ void __declspec(naked) VehicleReflectionResCodeCave1()
 	{
 		push 0x01
 		push 0x01
-		push VehicleRes
+		push CubemapRes
 		jmp VehicleReflectionResCodeCave1Exit
 	}
 }
@@ -47,8 +47,8 @@ void __declspec(naked) VehicleReflectionResCodeCave2()
 {
 	_asm
 	{
-		push VehicleRes
-		push VehicleRes
+		push CubemapRes
+		push CubemapRes
 		push eax
 		call dword ptr ds : [edx + 0x74]
 		jmp VehicleReflectionResCodeCave2Exit
@@ -61,7 +61,7 @@ void __declspec(naked) VehicleReflectionResCodeCave3()
 {
 	_asm
 	{
-		mov edx, dword ptr ds : [VehicleRes]
+		mov edx, dword ptr ds : [CubemapRes]
 		jmp VehicleReflectionResCodeCave3Exit
 	}
 }
