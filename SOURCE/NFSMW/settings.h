@@ -2,7 +2,9 @@
 
 // Resolution
 bool AutoRes;
-float Scale;
+float CubemapScale;
+float MirrorScale;
+float RoadScale;
 bool OldGPUCompatibility;
 int FECubemapRes;
 

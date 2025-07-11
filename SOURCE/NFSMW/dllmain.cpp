@@ -16,7 +16,9 @@ void Init()
 
 	// Resolution
 	AutoRes = iniReader.ReadInteger("RESOLUTION", "AutoRes", 1);
-	Scale = iniReader.ReadFloat("RESOLUTION", "Scale", 1.0f);
+	CubemapScale = iniReader.ReadFloat("RESOLUTION", "CubemapScale", 1.0f);
+	MirrorScale = iniReader.ReadFloat("RESOLUTION", "MirrorScale", 1.0f);
+	RoadScale = iniReader.ReadFloat("RESOLUTION", "RoadScale", 1.0f);
 	OldGPUCompatibility = iniReader.ReadInteger("RESOLUTION", "OldGPUCompatibility", 0);
 	FECubemapRes = iniReader.ReadInteger("RESOLUTION", "FECubemapRes", 256);
 
@@ -57,16 +59,16 @@ void Init()
 
 	// Resolution Multiplier
 	{
-		CubemapRes = CubemapRes * Scale;
-		MirrorResX = MirrorResX * Scale;
-		MirrorResY = MirrorResY * Scale;
-		RoadResX = RoadResX * Scale;
-		RoadResY = RoadResY * Scale;
+		CubemapRes = CubemapRes * CubemapScale;
+		MirrorResX = MirrorResX * MirrorScale;
+		MirrorResY = MirrorResY * MirrorScale;
+		RoadResX = RoadResX * RoadScale;
+		RoadResY = RoadResY * RoadScale;
 	}
 
 	if (OldGPUCompatibility)
 	{
-		// Rounds the cubemap resoltution down to the nearest power of two
+		// Rounds the cubemap resolution down to the nearest power of two
 		static int CubemapRes_POT = CubemapRes;
 		CubemapRes_POT--;
 		CubemapRes_POT |= CubemapRes_POT >> 1;
