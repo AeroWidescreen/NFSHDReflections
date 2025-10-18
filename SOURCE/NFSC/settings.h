@@ -1,21 +1,21 @@
 #pragma once
 
-// Constants
-int RoadResX = 320;
-int RoadResY = 240;
-int VehicleRes = 256;
-int MirrorResX = 512;
-int MirrorResY = 256;
-int PIPRes = 256;
-int CubemapRes = 256;
-
 // Resolution
-bool HDReflections;
-bool OldGPUCompatibility;
-float VehicleScale;
-float RoadScale;
-float MirrorScale;
+bool AutoRes;
+float CubemapScale;
 float PIPScale;
+float MirrorScale;
+float RoadScale;
+bool OldGPUCompatibility;
+int FECubemapRes;
+
+// Custom Resolution
+int CubemapRes;
+int PIPRes;
+int RoadResX;
+int RoadResY;
+int MirrorResX;
+int MirrorResY;
 
 // General
 bool ImproveReflectionLOD;

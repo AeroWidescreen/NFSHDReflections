@@ -12,7 +12,6 @@ void __declspec(naked) RoadReflectionCodeCave1()
 	{
 		// for widescreen fix compatibility
 		fild dword ptr ds : [RoadResX]
-		fmul dword ptr ds : [RoadScale]
 		fistp dword ptr ds : [RoadReflectionRes1]
 		mov edx, dword ptr ds : [RoadReflectionRes1]
 		push edx
@@ -31,7 +30,6 @@ void __declspec(naked) RoadReflectionCodeCave2()
 	{
 		// for widescreen fix compatibility
 		fild dword ptr ds : [RoadResX]
-		fmul dword ptr ds : [RoadScale]
 		fistp dword ptr ds : [RoadReflectionRes2]
 		mov ecx, dword ptr ds : [RoadReflectionRes2]
 		push ecx
@@ -51,7 +49,6 @@ void __declspec(naked) RoadReflectionCodeCave3()
 		// for widescreen fix compatibility
 		mov eax, dword ptr ds : [0xAB0ABC]
 		fild dword ptr ds : [RoadResY]
-		fmul dword ptr ds : [RoadScale]
 		fistp dword ptr ds : [RoadReflectionRes3]
 		mov edx, dword ptr ds : [RoadReflectionRes3]
 		jmp RoadReflectionCodeCave3Exit

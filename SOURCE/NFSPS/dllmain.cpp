@@ -14,9 +14,12 @@ void Init()
 	CIniReader iniReader("NFSPSHDReflections.ini");
 
 	// Resolution
-	HDReflections = iniReader.ReadInteger("RESOLUTION", "HDReflections", 1);
+	AutoRes = iniReader.ReadInteger("RESOLUTION", "AutoRes", 1);
+	CubemapScale = iniReader.ReadFloat("RESOLUTION", "CubemapScale", 1.0f);
 	OldGPUCompatibility = iniReader.ReadInteger("RESOLUTION", "OldGPUCompatibility", 0);
-	Scale = iniReader.ReadFloat("RESOLUTION", "Scale", 1.0f);
+	
+	// Custom Resolution
+	CubemapRes = iniReader.ReadInteger("CUSTOM RESOLUTION", "CubemapRes", 256);
 
 	// General
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
@@ -31,38 +34,42 @@ void Init()
 	GammaFix = iniReader.ReadInteger("EXTRA", "GammaFix", 1);
 	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
 
-	if (HDReflections)
+	if (AutoRes)
 	{
-		VehicleRes = (int)1024;
+		CubemapRes = GetSystemMetrics(SM_CYSCREEN);
+	}
+
+	// Resolution Multiplier
+	{
+		CubemapRes = CubemapRes * CubemapScale;
+	}
+
+	if (OldGPUCompatibility)
+	{
+		// Rounds the cubemap resolution down to the nearest power of two
+		static int CubemapRes_POT = CubemapRes;
+		CubemapRes_POT--;
+		CubemapRes_POT |= CubemapRes_POT >> 1;
+		CubemapRes_POT |= CubemapRes_POT >> 2;
+		CubemapRes_POT |= CubemapRes_POT >> 4;
+		CubemapRes_POT |= CubemapRes_POT >> 8;
+		CubemapRes_POT |= CubemapRes_POT >> 16;
+		CubemapRes_POT++;
+
+		if (CubemapRes_POT > CubemapRes)
+		{
+			CubemapRes_POT = CubemapRes_POT >> 1;
+		}
+		CubemapRes = CubemapRes_POT;
 	}
 
 	// Writes Resolution Values
 	{
 		// Vehicle Reflection
-		injector::WriteMemory<uint32_t>(0x4BD062, VehicleRes * Scale, true);
-		injector::WriteMemory<uint32_t>(0x4BD24D, VehicleRes * Scale, true);
-		injector::WriteMemory<uint32_t>(0x4BD283, VehicleRes * Scale, true);
-		injector::WriteMemory<uint32_t>(0x4BD288, VehicleRes * Scale, true);
-
-		if (OldGPUCompatibility)
-		{
-			// Rounds vehicle resolution down to the nearest power of two
-			static int VehicleRes_POT = (VehicleRes * Scale);
-			VehicleRes_POT--;
-			VehicleRes_POT |= VehicleRes_POT >> 1;
-			VehicleRes_POT |= VehicleRes_POT >> 2;
-			VehicleRes_POT |= VehicleRes_POT >> 4;
-			VehicleRes_POT |= VehicleRes_POT >> 8;
-			VehicleRes_POT |= VehicleRes_POT >> 16;
-			VehicleRes_POT++;
-			if (VehicleRes_POT > (VehicleRes * Scale))
-			{VehicleRes_POT = VehicleRes_POT >> 1;}
-			VehicleRes = VehicleRes_POT;
-			injector::WriteMemory<uint32_t>(0x4BD062, VehicleRes_POT, true);
-			injector::WriteMemory<uint32_t>(0x4BD24D, VehicleRes_POT, true);
-			injector::WriteMemory<uint32_t>(0x4BD283, VehicleRes_POT, true);
-			injector::WriteMemory<uint32_t>(0x4BD288, VehicleRes_POT, true);
-		}
+		injector::WriteMemory<uint32_t>(0x4BD062, CubemapRes, true);
+		injector::WriteMemory<uint32_t>(0x4BD24D, CubemapRes, true);
+		injector::WriteMemory<uint32_t>(0x4BD283, CubemapRes, true);
+		injector::WriteMemory<uint32_t>(0x4BD288, CubemapRes, true);
 	}
 
 	if (ImproveReflectionLOD)

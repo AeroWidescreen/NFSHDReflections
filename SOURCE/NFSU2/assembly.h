@@ -1,13 +1,13 @@
 #pragma once
 
-DWORD RestoreFEReflectionCodeCaveExit = 0x5BA513;
+DWORD FECubemapResCodeCaveExit = 0x5BA513;
 
-void __declspec(naked) RestoreFEReflectionCodeCave()
+void __declspec(naked) FECubemapResCodeCave()
 {
 	_asm
 	{
-		mov edx, 0x80
-		jmp RestoreFEReflectionCodeCaveExit
+		mov edx, dword ptr ds : [FECubemapRes] // Front-End Cubemap Resolution
+		jmp FECubemapResCodeCaveExit
 	}
 }
 
@@ -350,7 +350,6 @@ void __declspec(naked) sub_5C6520()
 
 	loc_5C6557:
 		fild dword ptr ds : [MirrorResX]
-		fdiv dword ptr ds : [MirrorScale]
 		mov ebx, dword ptr ds : [ebp + 0x10]
 		mov esi, dword ptr ds : [ebx * 4 + 0x86EB28]
 		mov eax, 0xFF7F7F7F
@@ -375,7 +374,6 @@ void __declspec(naked) sub_5C6520()
 		mov ecx, esi
 		fstp dword ptr ds : [esp + 0x14]
 		fild dword ptr ds : [MirrorResY]
-		fdiv dword ptr ds : [MirrorScale]
 		fdivr dword ptr ds : [0x7A27CC]
 		jmp loc_5C6600
 	}

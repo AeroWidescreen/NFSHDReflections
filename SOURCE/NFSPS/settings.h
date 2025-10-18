@@ -1,12 +1,12 @@
 #pragma once
 
-// Constants
-int VehicleRes = 256;
-
 // Resolution
-bool HDReflections;
+bool AutoRes;
+float CubemapScale;
 bool OldGPUCompatibility;
-float Scale;
+
+// Custom Resolution
+int CubemapRes;
 
 // General
 bool ImproveReflectionLOD;

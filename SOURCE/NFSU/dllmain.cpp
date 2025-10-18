@@ -14,11 +14,18 @@ void Init()
 	CIniReader iniReader("NFSUHDReflections.ini");
 
 	// Resolution
-	HDReflections = iniReader.ReadInteger("RESOLUTION", "HDReflections", 1);
-	OldGPUCompatibility = iniReader.ReadInteger("RESOLUTION", "OldGPUCompatibility", 0);
-	VehicleScale = iniReader.ReadFloat("RESOLUTION", "VehicleScale", 1.0f);
-	RoadScale = iniReader.ReadFloat("RESOLUTION", "RoadScale", 1.0f);
+	AutoRes = iniReader.ReadInteger("RESOLUTION", "AutoRes", 1);
+	CubemapScale = iniReader.ReadFloat("RESOLUTION", "CubemapScale", 1.0f);
 	MirrorScale = iniReader.ReadFloat("RESOLUTION", "MirrorScale", 1.0f);
+	RoadScale = iniReader.ReadFloat("RESOLUTION", "RoadScale", 1.0f);
+	OldGPUCompatibility = iniReader.ReadInteger("RESOLUTION", "OldGPUCompatibility", 0);
+
+	// Custom Resolution
+	CubemapRes = iniReader.ReadInteger("CUSTOM RESOLUTION", "CubemapRes", 128);
+	MirrorResX = iniReader.ReadInteger("CUSTOM RESOLUTION", "MirrorResX", 256);
+	MirrorResY = iniReader.ReadInteger("CUSTOM RESOLUTION", "MirrorResY", 64);
+	RoadResX = iniReader.ReadInteger("CUSTOM RESOLUTION", "RoadResX", 320);
+	RoadResY = iniReader.ReadInteger("CUSTOM RESOLUTION", "RoadResY", 240);
 
 	// General
 	ImproveReflectionLOD = iniReader.ReadInteger("GENERAL", "ImproveReflectionLOD", 1);
@@ -33,49 +40,60 @@ void Init()
 	RealisticChrome = iniReader.ReadInteger("EXTRA", "RealisticChrome", 0);
 	ExtendTunnelDistance = iniReader.ReadInteger("EXTRA", "ExtendTunnelDistance", 0);
 
-	if (HDReflections)
+	if (AutoRes)
 	{
+		CubemapRes = GetSystemMetrics(SM_CYSCREEN);
+		MirrorResX = GetSystemMetrics(SM_CXSCREEN) / 2;
+		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 6;
 		RoadResX = GetSystemMetrics(SM_CXSCREEN);
 		RoadResY = GetSystemMetrics(SM_CYSCREEN);
-		VehicleRes = (int)1024;
-		MirrorResX = GetSystemMetrics(SM_CYSCREEN) / 2;
-		MirrorResY = GetSystemMetrics(SM_CYSCREEN) / 6;
+	}
+
+	// Resolution Multiplier
+	{
+		CubemapRes = CubemapRes * CubemapScale;
+		MirrorResX = MirrorResX * MirrorScale;
+		MirrorResY = MirrorResY * MirrorScale;
+		RoadResX = RoadResX * RoadScale;
+		RoadResY = RoadResY * RoadScale;
+	}
+
+	if (OldGPUCompatibility)
+	{
+		// Rounds the cubemap resolution down to the nearest power of two
+		static int CubemapRes_POT = CubemapRes;
+		CubemapRes_POT--;
+		CubemapRes_POT |= CubemapRes_POT >> 1;
+		CubemapRes_POT |= CubemapRes_POT >> 2;
+		CubemapRes_POT |= CubemapRes_POT >> 4;
+		CubemapRes_POT |= CubemapRes_POT >> 8;
+		CubemapRes_POT |= CubemapRes_POT >> 16;
+		CubemapRes_POT++;
+
+		if (CubemapRes_POT > CubemapRes)
+		{
+			CubemapRes_POT = CubemapRes_POT >> 1;
+		}
+		CubemapRes = CubemapRes_POT;
 	}
 
 	// Writes Resolution Values
 	{
 		// Road Reflection X
-		injector::WriteMemory<uint32_t>(0x40A8BB, RoadResX * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x40A8F1, RoadResX * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x40854C, RoadResX * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x40AACA, RoadResX * RoadScale, true);
+		injector::WriteMemory<uint32_t>(0x40A8BB, RoadResX, true);
+		injector::WriteMemory<uint32_t>(0x40A8F1, RoadResX, true);
+		injector::WriteMemory<uint32_t>(0x40854C, RoadResX, true);
+		injector::WriteMemory<uint32_t>(0x40AACA, RoadResX, true);
 		// Road Reflection Y
-		injector::WriteMemory<uint32_t>(0x40A8B6, RoadResY * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x40A8EC, RoadResY * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x408553, RoadResY * RoadScale, true);
-		injector::WriteMemory<uint32_t>(0x40AAD1, RoadResY * RoadScale, true);
+		injector::WriteMemory<uint32_t>(0x40A8B6, RoadResY, true);
+		injector::WriteMemory<uint32_t>(0x40A8EC, RoadResY, true);
+		injector::WriteMemory<uint32_t>(0x408553, RoadResY, true);
+		injector::WriteMemory<uint32_t>(0x40AAD1, RoadResY, true);
 		// Vehicle Reflection
-		injector::WriteMemory<uint32_t>(0x702A84, VehicleRes * VehicleScale, true);
-		// RVM Reflection
-		// Aspect ratio without RVM_MASK is 3:1
+		injector::WriteMemory<uint32_t>(0x702A84, CubemapRes, true);
+		// Rearview Mirror
 		injector::WriteMemory<uint32_t>(0x702A9C, MirrorResX, true);
 		injector::WriteMemory<uint32_t>(0x702AA0, MirrorResY, true);
-
-		if (OldGPUCompatibility)
-		{
-			// Rounds vehicle resolution down to the nearest power of two
-			static int VehicleRes_POT = (VehicleRes * VehicleScale);
-			VehicleRes_POT--;
-			VehicleRes_POT |= VehicleRes_POT >> 1;
-			VehicleRes_POT |= VehicleRes_POT >> 2;
-			VehicleRes_POT |= VehicleRes_POT >> 4;
-			VehicleRes_POT |= VehicleRes_POT >> 8;
-			VehicleRes_POT |= VehicleRes_POT >> 16;
-			VehicleRes_POT++;
-			if (VehicleRes_POT > (VehicleRes * VehicleScale))
-			{VehicleRes_POT = VehicleRes_POT >> 1;}
-			injector::WriteMemory<uint32_t>(0x702A84, VehicleRes_POT, true);
-		}
 	}
 
 	if (ImproveReflectionLOD)

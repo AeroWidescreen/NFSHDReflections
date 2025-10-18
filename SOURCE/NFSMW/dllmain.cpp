@@ -10,7 +10,6 @@
 
 void Init()
 {
-
 	// Read values from .ini
 	CIniReader iniReader("NFSMWHDReflections.ini");
 
