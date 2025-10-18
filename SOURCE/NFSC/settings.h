@@ -26,7 +26,7 @@ float CopFlareScale;
 int ForceEnvironmentMap;
 bool AlignmentFix;
 bool AspectRatioFix;
-bool CubemapFix;
+bool FECubemapFix;
 bool RestoreSkybox;
 bool EnableMirror;
 bool RealFrontEndReflections;

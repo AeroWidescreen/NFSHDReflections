@@ -40,7 +40,7 @@ void Init()
 	ForceEnvironmentMap = iniReader.ReadInteger("GENERAL", "ForceEnvironmentMap", 0);
 	AlignmentFix = iniReader.ReadInteger("GENERAL", "AlignmentFix", 1);
 	AspectRatioFix = iniReader.ReadInteger("GENERAL", "AspectRatioFix", 1);
-	CubemapFix = iniReader.ReadInteger("GENERAL", "CubemapFix", 1);
+	FECubemapFix = iniReader.ReadInteger("GENERAL", "FECubemapFix", 1);
 	RestoreSkybox = iniReader.ReadInteger("GENERAL", "RestoreSkybox", 1);
 	EnableMirror = iniReader.ReadInteger("GENERAL", "EnableMirror", 1);
 	RealFrontEndReflections = iniReader.ReadInteger("GENERAL", "RealFrontEndReflections", 0);
@@ -201,7 +201,7 @@ void Init()
 		injector::MakeJMP(0x73E1B5, VehicleReflAspectRatioCodeCave, true);
 	}
 
-	if (CubemapFix)
+	if (FECubemapFix)
 	{
 		// Fixes the "QRACE" cubemap
 		injector::MakeJMP(0x572C30, CubemapFixCodeCave, true);
