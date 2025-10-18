@@ -13,8 +13,8 @@ https://mega.nz/file/gCxGUCpK#QlO57l7xjYyyFXGhjqlu6AcJq9nEFeZueNr2ywC04Hc
 4. Enjoy!  
 
 ## General Features (check INI file)
-• HDReflections : Resolution will be increased based on desktop resolution.   
-• OldGPUCompatibility: Vehicle reflections will be rounded to the nearest power of two.  
+• AutoRes : Automatically changes the resolution.  
+• OldGPUCompatibility: The cubemap resolution will always be rounded down to the nearest power of two.  
 • Scale : Controls the resolution multiplier of reflections.  
 • ImproveReflectionLOD : Increases the level of detail used in reflections.  
 • ExtendRenderDistance : Increases the render distance of vehicle reflections.  
