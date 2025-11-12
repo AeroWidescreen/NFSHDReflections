@@ -1,12 +1,8 @@
-﻿#include "stdafx.h"
-#include "stdio.h"
-#include <windows.h>
-#include "..\includes\injector\injector.hpp"
-#include <cstdint>
+﻿#include "..\includes\injector\injector.hpp"
 #include "..\includes\IniReader.h"
-#include <d3d9.h>
 #include "settings.h"
 #include "assembly.h"
+#include "stdafx.h"
 
 void Init()
 {
@@ -39,7 +35,7 @@ void Init()
 	RestoreCars = iniReader.ReadInteger("GENERAL", "RestoreCars", 0);
 	RestoreBackfaceCulling = iniReader.ReadInteger("GENERAL", "RestoreBackfaceCulling", 1);
 	RestoreWaterReflections = iniReader.ReadInteger("GENERAL", "RestoreWaterReflections", 0);
-	RemoveLastGenEffects = iniReader.ReadInteger("GENERAL", "RemoveLastGenEffects", 1);
+	RemoveLastGenEffects = iniReader.ReadInteger("GENERAL", "RemoveLastGenEffects", 2);
 	OptimizeRenderDistance = iniReader.ReadInteger("GENERAL", "OptimizeRenderDistance", 1);
 	VehicleReflectionBrightness = iniReader.ReadFloat("GENERAL", "VehicleReflectionBrightness", 1.0f);
 

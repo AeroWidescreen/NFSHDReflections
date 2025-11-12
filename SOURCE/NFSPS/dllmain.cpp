@@ -1,12 +1,8 @@
-﻿#include "stdafx.h"
-#include "stdio.h"
-#include <windows.h>
-#include "..\includes\injector\injector.hpp"
-#include <cstdint>
+﻿#include "..\includes\injector\injector.hpp"
 #include "..\includes\IniReader.h"
-#include <d3d9.h>
 #include "settings.h"
 #include "assembly.h"
+#include "stdafx.h"
 
 void Init()
 {
