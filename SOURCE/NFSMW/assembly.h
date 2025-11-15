@@ -66,7 +66,7 @@ void __declspec(naked) VehicleReflectionResCodeCave3()
 	}
 }
 
-DWORD sub_507770 = 0x507770;
+DWORD loc_507781 = 0x507781;
 DWORD sub_505E80 = 0x505E80;
 DWORD TrafficLightRestorationCodeCaveExit = 0x6DE9F8;
 
@@ -79,6 +79,15 @@ void __declspec(naked) TrafficLightRestorationCodeCave()
 		call sub_505E80
 		add esp, 0x0C
 		jmp TrafficLightRestorationCodeCaveExit
+
+	sub_507770:
+		sub esp, 0x08
+		push ebp
+		push edi
+		mov edi, dword ptr ds : [esp + 0x14]
+		mov ecx, dword ptr ds : [edi + 0x04]
+		mov eax, 0x02 // 0x02 = removes vehicle sunflare from mirror
+		jmp loc_507781
 	}
 }
 
