@@ -24,16 +24,16 @@ https://mega.nz/file/gCxGUCpK#QlO57l7xjYyyFXGhjqlu6AcJq9nEFeZueNr2ywC04Hc
 
 ## FAQ  
 Q: **Is this compatible with other mods?**  
-A: I can't make any promises. It's been tested with Widescreen Fix, XtendedInput, Extra Options, and Unlimiter. All texture mods and car mods should work.  
+A: I can't make any promises. It's been tested with Widescreen Fix, Xbox 360 Stuff, XtendedInput, Extra Options, and Unlimiter. All texture mods and car mods should work.  
 
 Q: **What are the system requirements?**  
 A: It depends on your resolution, settings, and other graphical enhancements being used. For 1080p, an NVIDIA GTX 1060 / AMD RX 480 should be more than enough for the default configuration.  
 
 Q: **Why is a No-CD fix required?**  
-A: Need for Speed games have protections (DRM) that make it difficult to view and modify their code, so No-CD patches are often recommended when using ASI scripts. Additionally, the memory addresses in my scripts are all hardcoded and it's not something I can easily change.     
+A: Need for Speed games have protections (DRM) that make it difficult to view and modify their code, so No-CD patches are often recommended when using ASI mods. Additionally, the memory addresses in my mods are all hardcoded and it's not something I can easily change.  
 
-Q: **Why don't I have water reflections like your screenshot of Need for Speed Most Wanted?**  
-A: Install Xbox 360 Stuff Pack. My screenshot simply demonstrates the improvement in resolution and detail.  
+Q: **Why is the Widescreen Fix recommended?**
+A: Most features I make are often designed to work with the Widescreen Fix. Carbon's "ReflectionContrast" (HD Reflections) and "LightingFix" (Widescreen Fix) features are a good example of this. The Widescreen Fix also provides a solid foundation that everyone should use, since it corrects visual and technical errors the PC ports have.  
 
  ## Credits
 [Aero_](https://github.com/AeroWidescreen) : Creator of NFS HD Reflections.  
