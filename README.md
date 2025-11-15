@@ -32,7 +32,7 @@ A: It depends on your resolution, settings, and other graphical enhancements bei
 Q: **Why is a No-CD fix required?**  
 A: Need for Speed games have protections (DRM) that make it difficult to view and modify their code, so No-CD patches are often recommended when using ASI mods. Additionally, the memory addresses in my mods are all hardcoded and it's not something I can easily change.  
 
-Q: **Why is the Widescreen Fix recommended?**
+Q: **Why is the Widescreen Fix recommended?**  
 A: Most features I make are often designed to work with the Widescreen Fix. Carbon's "ReflectionContrast" (HD Reflections) and "LightingFix" (Widescreen Fix) features are a good example of this. The Widescreen Fix also provides a solid foundation that everyone should use, since it corrects visual and technical errors the PC ports have.  
 
  ## Credits
