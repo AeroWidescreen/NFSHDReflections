@@ -703,9 +703,9 @@ void __declspec(naked) DrawCarsForCubemap()
 DWORD sub_6C0A20 = 0x6C0A20;
 DWORD sub_768EE0 = 0x768EE0;
 DWORD sub_769190 = 0x769190;
-float RGBAmbient = 0.65f;
-float RGBDiffuse = 0.65f;
-float RGBSpecular = 1.0f;
+float RGBAmbient = 0.625f;
+float RGBDiffuse = 0.625f;
+float RGBSpecular = 0.1f;
 
 void __declspec(naked) EnvmapBrightnessCodeCave()
 {
